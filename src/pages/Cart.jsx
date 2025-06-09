@@ -8,6 +8,9 @@ import CartImg from '../assets/images/cart.png';
 import Partner1 from '../assets/images/partner_1.png';
 import Partner2 from '../assets/images/partner_2.webp';
 import Partner3 from '../assets/images/partner_3.png';
+import P1Img from '../assets/images/p1_img.png';
+import P2Img from '../assets/images/p2_img.png';
+import P3Img from '../assets/images/p3_img.png';
 import Profile from '../assets/images/profile.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
@@ -134,19 +137,25 @@ const Cart = () => {
             </div>
         </div>
         {/* Partner Section */}
-        <div className="partner_section mt-5">
+         <div className="partner_section_main">
             <div className="container">
-                <div className="row partner_section_main justify-content-center">
-                    <div className="col-sm-3 partner_image">
-                        <img src={Partner3} alt="" />
-                    </div>
-                    <div className="col-sm-3 partner_image">
-                        <img src={Partner1} alt="" />
-                    </div>
-                    <div className="col-sm-3 partner_image">
-                        <img src={Partner2} alt="" />
-                    </div>
+            <div className="row">
+                <div className="col-sm-4 mb-3">
+                <div className="partner_card text-start">
+                    <img src={P1Img} alt="" />
                 </div>
+                </div>
+                <div className="col-sm-3 mb-3">
+                <div className="partner_card text-start">
+                    <img src={P2Img} alt=""  className='partner_imag_2'/>
+                </div>
+                </div>
+                <div className="col-sm-5">
+                <div className="partner_card text-start">
+                    <img src={P3Img} alt="" />
+                </div>
+                </div>
+            </div>
             </div>
         </div>
     </div>

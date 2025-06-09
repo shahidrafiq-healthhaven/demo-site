@@ -7,6 +7,9 @@ import P4 from '../assets/images/p4.png';
 import Partner1 from '../assets/images/partner_1.png';
 import Partner2 from '../assets/images/partner_2.webp';
 import Partner3 from '../assets/images/partner_3.png';
+import P1Img from '../assets/images/p1_img.png';
+import P2Img from '../assets/images/p2_img.png';
+import P3Img from '../assets/images/p3_img.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { faTrash  } from '@fortawesome/free-solid-svg-icons';
@@ -23,6 +26,8 @@ const Checkout = () => {
     recipient: 'Me',
     gender: '',
     pet: '',
+    firstName: '',
+
   });
   const steps = ['Patient Info', 'Health Info', 'Prescription Info', 'Shipping', 'Payment'];
   const [sameAsShipping, setSameAsShipping] = useState(false);
@@ -71,7 +76,7 @@ const Checkout = () => {
                 <>
                   <p>Who are the medications for?</p>
                   <div className="my-3" role="group">
-                    {['Me', 'Cathleen', 'Add New'].map((option) => (
+                    {['Me', 'Add New'].map((option) => (
                       <button
                         key={option}
                         type="button"
@@ -110,11 +115,11 @@ const Checkout = () => {
                       <div className="row mt-3">
                         <div className="col-sm-6">
                           <p>First Name</p>
-                          <input type="text" placeholder='Legal first name' className='w-100 my-2 p-2 bg-white text-black' />
+                          <input type="text" placeholder='Legal first name' className='w-100 my-2 p-2 bg-white text-black' value={formData.firstName || ''}  onChange={(e) => handleChange('firstName', e.target.value)} />
                         </div>
                         <div className="col-sm-6">
                           <p>Last Name</p>
-                          <input type="text" placeholder='Legal last name' className='w-100 my-2 p-2 bg-white text-black' />
+                          <input type="text" placeholder='Legal last name' className='w-100 my-2 p-2 bg-white text-black' value={formData.lastName || ''} onChange={(e) => handleChange('lastName', e.target.value)}/>
                         </div>
                       </div>
                       <div className="row mt-3">
@@ -184,7 +189,7 @@ const Checkout = () => {
                       <div className="row mt-3">
                         <div className="col-sm-6">
                           <p>Your Mobile Number</p>
-                          <input type="text" placeholder='(152) 435-6126' className='my-2 p-2 bg-white text-black' />
+                          <input type="tel" placeholder='(152) 435-6126' className='my-2 p-2 bg-white text-black' value={formData.mobile || ''} onChange={(e) => handleChange('mobile', e.target.value)} />
                         </div>
                       </div>
                       <div className="form-check mt-2 mb-3">
@@ -601,9 +606,9 @@ const Checkout = () => {
                   <h5>Shipping Address</h5>
                   <div className="border rounded p-3 mb-3 bg-light">
                     <div className="text-uppercase text-muted small mb-2">Shipping Address</div>
-                    <div>Yinka Ojutalayo<br />
+                    <div>{formData.firstName} {formData.lastName}<br />
                       11 South State Street<br />
-                      Lake Oswego, OR 97034
+                      {formData.mobile}
                     </div>
                   </div>
 
@@ -768,15 +773,18 @@ const Checkout = () => {
                     </div>
                   </div>
                   <div className="d-flex gap-3">
-                    <div className="d-flex align-content-center mt-3 gap-2" >
-                      <FontAwesomeIcon icon={faTrash } className="star-icon mt-1"/>
-                      <small>Remove</small>
-                    </div>
-                    <div className="d-flex align-content-center mt-3 gap-2" >
-                      <FontAwesomeIcon icon={faEdit} className="star-icon mt-1"/>
-                      <small>Edit</small>
-                    </div>
-
+                    <Link to={`/cart`} >
+                      <div className="d-flex align-content-center mt-3 gap-2" >
+                        <FontAwesomeIcon icon={faTrash } className="star-icon mt-1"/>
+                        <small>Remove</small>
+                      </div>
+                    </Link>
+                    <Link to={`/cart`} >
+                      <div className="d-flex align-content-center mt-3 gap-2" >
+                        <FontAwesomeIcon icon={faEdit} className="star-icon mt-1"/>
+                        <small>Edit</small>
+                      </div>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -808,20 +816,26 @@ const Checkout = () => {
         </div>
       </div>
        {/* Partner Section */}
-      <div className="partner_section mt-5">
-          <div className="container">
-              <div className="row partner_section_main justify-content-center">
-                  <div className="col-sm-3 partner_image">
-                      <img src={Partner3} alt="" />
-                  </div>
-                  <div className="col-sm-3 partner_image">
-                      <img src={Partner1} alt="" />
-                  </div>
-                  <div className="col-sm-3 partner_image">
-                      <img src={Partner2} alt="" />
-                  </div>
+      <div className="partner_section_main">
+        <div className="container">
+          <div className="row">
+              <div className="col-sm-4 mb-3">
+              <div className="partner_card text-start">
+                  <img src={P1Img} alt="" />
+              </div>
+              </div>
+              <div className="col-sm-3 mb-3">
+              <div className="partner_card text-start">
+                  <img src={P2Img} alt=""  className='partner_imag_2'/>
+              </div>
+              </div>
+              <div className="col-sm-5">
+              <div className="partner_card text-start">
+                  <img src={P3Img} alt="" />
+              </div>
               </div>
           </div>
+        </div>
       </div>
     </div>
    </>

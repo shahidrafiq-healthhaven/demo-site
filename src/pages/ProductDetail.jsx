@@ -7,9 +7,9 @@ import P1 from '../assets/images/p1.png';
 import P2 from '../assets/images/p2.png';
 import P3 from '../assets/images/p3.png';
 import P4 from '../assets/images/p4.png';
-import Partner1 from '../assets/images/partner_1.png';
-import Partner2 from '../assets/images/partner_2.webp';
-import Partner3 from '../assets/images/partner_3.png';
+import P1Img from '../assets/images/p1_img.png';
+import P2Img from '../assets/images/p2_img.png';
+import P3Img from '../assets/images/p3_img.png';
 import S3Img1 from '../assets/images/s3_i1.png';
 import S3Img2 from '../assets/images/s3_i2.png';
 import S3Img3 from '../assets/images/s3_i3.png';
@@ -597,21 +597,27 @@ useEffect(() => {
     </div>
 
     {/* Partner Section */}
-      <div className="partner_section mt-5">
-        <div className="container">
-            <div className="row partner_section_main justify-content-center">
-                <div className="col-sm-3 partner_image">
-                    <img src={Partner3} alt="" />
-                </div>
-                <div className="col-sm-3 partner_image">
-                    <img src={Partner1} alt="" />
-                </div>
-                <div className="col-sm-3 partner_image">
-                    <img src={Partner2} alt="" />
-                </div>
+    <div className="partner_section_main">
+      <div className="container">
+        <div className="row">
+            <div className="col-sm-4 mb-3">
+            <div className="partner_card text-start">
+                <img src={P1Img} alt="" />
+            </div>
+            </div>
+            <div className="col-sm-3 mb-3">
+            <div className="partner_card text-start">
+                <img src={P2Img} alt=""  className='partner_imag_2'/>
+            </div>
+            </div>
+            <div className="col-sm-5">
+            <div className="partner_card text-start">
+                <img src={P3Img} alt="" />
+            </div>
             </div>
         </div>
       </div>
+    </div>
   </>
   );
 };

@@ -46,9 +46,9 @@ const Header = () => {
               </li>
             </ul>
 
-            <div className="d-flex align-items-center ms-3">
+            <div className="d-flex align-items-center justify-content-center gap-4">
                 <img src={User} alt="user"  className="user_icon"/>
-                <img src={Cart} alt="cart"  className=""/>
+                <img src={Cart} alt="cart"  className="cart_icon"/>
               {/* <FaUser className="text-white me-3" style={{ cursor: "pointer" }} />
               <FaShoppingCart className="text-white" style={{ cursor: "pointer" }} /> */}
             </div>

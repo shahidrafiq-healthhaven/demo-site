@@ -41,7 +41,7 @@ p{
   padding: 7px 0px;
 }
 .header_bottom p{
-  font-size: 18px;
+  font-size: 15px;
   text-transform: uppercase;
 }
 .navbar{
@@ -55,7 +55,10 @@ p{
   font-size: 22px;
   font-weight: 500;
 }
-.user_icon{
+/* .user_icon{
+  margin-right: 38px;
+} */
+.cart_icon{
   margin-right: 38px;
 }
 .footer_main{
@@ -478,6 +481,7 @@ p{
   color: #fff !important;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .product_detail_right{
   border-radius: 10px;

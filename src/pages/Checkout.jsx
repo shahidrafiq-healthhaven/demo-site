@@ -110,11 +110,11 @@ const Checkout = () => {
                       <div className="row mt-3">
                         <div className="col-sm-6">
                           <p>First Name</p>
-                          <input type="text" placeholder='Legal first name' className='w-100 my-2 p-2' />
+                          <input type="text" placeholder='Legal first name' className='w-100 my-2 p-2 bg-white text-black' />
                         </div>
                         <div className="col-sm-6">
                           <p>Last Name</p>
-                          <input type="text" placeholder='Legal last name' className='w-100 my-2 p-2' />
+                          <input type="text" placeholder='Legal last name' className='w-100 my-2 p-2 bg-white text-black' />
                         </div>
                       </div>
                       <div className="row mt-3">
@@ -184,7 +184,7 @@ const Checkout = () => {
                       <div className="row mt-3">
                         <div className="col-sm-6">
                           <p>Your Mobile Number</p>
-                          <input type="text" placeholder='(152) 435-6126' className='my-2 p-2' />
+                          <input type="text" placeholder='(152) 435-6126' className='my-2 p-2 bg-white text-black' />
                         </div>
                       </div>
                       <div className="form-check mt-2 mb-3">
@@ -344,17 +344,17 @@ const Checkout = () => {
                           <div className="row mb-3">
                             <div className="col-md-6">
                               <label htmlFor="doctorName" className="form-label">Your Doctor's Name</label>
-                              <input type="text" className="form-control" id="doctorName" placeholder="Your doctor's full name" />
+                              <input type="text" className="form-control bg-white text-black" id="doctorName" placeholder="Your doctor's full name" />
                             </div>
                             <div className="col-md-6">
                               <label htmlFor="doctorNumber" className="form-label">Your Doctor's Number</label>
-                              <input type="tel" className="form-control" id="doctorNumber" placeholder="(___) ___-____" />
+                              <input type="tel" className="form-control bg-white text-black" id="doctorNumber" placeholder="(___) ___-____" />
                             </div>
                           </div>
                           <div className="row mb-3">
                             <div className="col-md-6">
                               <label htmlFor="doctorFax" className="form-label">Your Doctor's Fax Number <span className="text-muted">(optional)</span></label>
-                              <input type="tel" className="form-control" id="doctorFax" placeholder="(___) ___-____" />
+                              <input type="tel" className="form-control bg-white text-black" id="doctorFax" placeholder="(___) ___-____" />
                             </div>
                           </div>
                           <button className="btn btn-primary" type="button">Save</button>
@@ -384,17 +384,17 @@ const Checkout = () => {
                           <div className="row mb-3">
                             <div className="col-md-6">
                               <label htmlFor="pharmacyName" className="form-label">Your Old Pharmacy</label>
-                              <input type="text" className="form-control" id="pharmacyName" placeholder="Pharmacy name" />
+                              <input type="text" className="form-control bg-white text-black" id="pharmacyName" placeholder="Pharmacy name" />
                             </div>
                             <div className="col-md-6">
                               <label htmlFor="pharmacyNumber" className="form-label">Pharmacy Phone Number</label>
-                              <input type="tel" className="form-control" id="pharmacyNumber" placeholder="(___) ___-____" />
+                              <input type="tel" className="form-control bg-white text-black" id="pharmacyNumber" placeholder="(___) ___-____" />
                             </div>
                           </div>
                           <div className="row mb-3">
                             <div className="col-md-6">
                               <label htmlFor="pharmacyFax" className="form-label">Pharmacy Fax Number <span className="text-muted">(optional)</span></label>
-                              <input type="tel" className="form-control" id="pharmacyFax" placeholder="(___) ___-____" />
+                              <input type="tel" className="form-control bg-white text-black" id="pharmacyFax" placeholder="(___) ___-____" />
                             </div>
                           </div>
                           <button className="btn btn-primary" type="button">Save</button>
@@ -423,17 +423,17 @@ const Checkout = () => {
                         <div className="mt-3">
                           <div className="row mb-3">
                             <div className="col-md-6">
-                              <label htmlFor="patientName" className="form-label">Your Doctor's Name</label>
+                              <label htmlFor="patientName" className="form-label bg-white text-black">Your Doctor's Name</label>
                               <input type="text" className="form-control" id="patientName" placeholder="Your Doctor's full name" />
                             </div>
                             <div className="col-md-6">
-                              <label htmlFor="patientNumber" className="form-label">Your Doctor's Number</label>
+                              <label htmlFor="patientNumber" className="form-label bg-white text-black">Your Doctor's Number</label>
                               <input type="tel" className="form-control" id="patientNumber" placeholder="(___) ___-____" />
                             </div>
                           </div>
                           <div className="row mb-3">
                             <div className="col-md-6">
-                              <label htmlFor="patientFax" className="form-label">Your Doctor's Fax Number <span className="text-muted">(optional)</span></label>
+                              <label htmlFor="patientFax" className="form-label bg-white text-black">Your Doctor's Fax Number <span className="text-muted">(optional)</span></label>
                               <input type="tel" className="form-control" id="patientFax" placeholder="(___) ___-____" />
                             </div>
                           </div>
@@ -601,7 +601,7 @@ const Checkout = () => {
                   <h5>Shipping Address</h5>
                   <div className="border rounded p-3 mb-3 bg-light">
                     <div className="text-uppercase text-muted small mb-2">Shipping Address</div>
-                    <div>asdf asdf<br />
+                    <div>Yinka Ojutalayo<br />
                       11 South State Street<br />
                       Lake Oswego, OR 97034
                     </div>

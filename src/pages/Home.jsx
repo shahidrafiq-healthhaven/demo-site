@@ -306,17 +306,17 @@ function Home() {
       <div className="partners_main">
         <div className="container">
           <div className="row">
-            <div className="col-sm-4">
+            <div className="col-sm-4 mb-3">
               <div className="partner_card text-start">
                 <img src={P1Img} alt="" />
               </div>
             </div>
-            <div className="col-sm-2">
+            <div className="col-sm-3 mb-3">
               <div className="partner_card text-start">
                 <img src={P2Img} alt=""  className='partner_imag_2'/>
               </div>
             </div>
-            <div className="col-sm-6">
+            <div className="col-sm-5">
               <div className="partner_card text-start">
                 <img src={P3Img} alt="" />
               </div>

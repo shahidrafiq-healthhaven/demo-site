@@ -12,6 +12,7 @@ import Profile from '../assets/images/profile.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { faTrash  } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
  
@@ -93,7 +94,8 @@ const Cart = () => {
                 <a href="/checkout">
                     <div className="cart_btn_main">
                         <a href="/checkout" className="cart_btn_2">Proceed to Checkout</a>
-                        <img src={CartImg} alt="" />
+                        <FontAwesomeIcon icon={faShoppingCart } className="text-white"/>
+                        {/* <img src={CartImg} alt="" /> */}
                     </div>
                 </a>
             </div>

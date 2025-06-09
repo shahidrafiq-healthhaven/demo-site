@@ -372,6 +372,7 @@ p{
 }
 .accordion-body {
    background-color: #F3F3F3;
+   text-align: left;
 }
 .dropdown-box{
   margin-top: 60px;
@@ -788,6 +789,56 @@ p{
   .partner_image {
     margin-bottom: 20px !important;
   }
+  .footer_main {
+    text-align: left;
+  }
+  .footer_main ul li {
+    margin-bottom: 18px !important;
+  }
+  .footer_heading {
+    margin-bottom: 40px;
+  }
+  .footer_bottom small {
+    font-size: 12px;
+  }
+  .footer_main ul li {
+    margin-bottom: 10px !important;
+  }
+  .footer_bottom {
+    padding-bottom: 50px;
+  }
+    .footer_main {
+    margin: 30px 0px !important;
+  }
+  .footer_heading {
+    font-size: 18px;
+    margin-bottom: 30px;
+    text-align: start;
+  }
+  .footer_gradient_div_top {
+    margin-bottom: 30px;
+  }
+  .footer_text {
+    font-size: 20px;
+  }
+    .footer_text {
+    font-size: 14px;
+  }
+    .faq_main {
+    padding: 44px 0px;
+  }
+  .faq_main p {
+    font-size: 16px;
+  }
+  .faq_main .heading_primary{
+    font-size: 28px;
+  }
+  .accordion-button{
+    font-size: 14px !important;
+  }
+  .accordion-body{
+    font-size: 12px !important;
+  }
 }
 @media only screen and (max-width: 481px){
   .header_bottom p{
@@ -906,21 +957,7 @@ p{
   .review_description{
     font-size: 22px;
   }
-  .faq_main {
-    padding: 44px 0px;
-  }
-  .faq_main p {
-    font-size: 16px;
-  }
-  .faq_main .heading_primary{
-    font-size: 28px;
-  }
-  .accordion-button{
-    font-size: 14px !important;
-  }
-  .accordion-body{
-    font-size: 12px !important;
-  }
+
   .footer_top{
     text-align: left;
   }
@@ -932,35 +969,11 @@ p{
   .social_icon img{
     max-width: 30px;
   }
-  .footer_main {
-    margin: 30px 0px !important;
-  }
-  .footer_heading {
-    font-size: 18px;
-    margin-bottom: 30px;
-    text-align: start;
-  }
-  .footer_gradient_div_top {
-    margin-bottom: 30px;
-  }
-  .footer_text {
-    font-size: 20px;
-  }
+
   .list-unstyled {
     text-align: left;
   }
-  .footer_text {
-    font-size: 14px;
-  }
-  .footer_bottom small {
-    font-size: 12px;
-  }
-  .footer_main ul li {
-    margin-bottom: 10px !important;
-  }
-  .footer_bottom {
-    padding-bottom: 50px;
-  }
+
   .contact_detail img{
     max-width: 18px;
   }
@@ -1007,5 +1020,11 @@ p{
   }
   .product_feature p {
     font-size: 14px;
+  }
+  h4{
+    font-size: 18px !important;
+  }
+  h5{
+    font-size: 16px !important;
   }
 }

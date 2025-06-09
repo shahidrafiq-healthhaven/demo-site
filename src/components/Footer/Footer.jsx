@@ -49,7 +49,7 @@ const Footer = () => {
         <div className="row footer_main">
           <div className="footer_gradient_div footer_gradient_div_top"></div>
           {/* Logo and Contact Info */}
-          <div className="col-md-5">
+          <div className="col-md-5 mb-3">
             <h6 className="footer_heading">Contact Us</h6>
             <ul className="list-unstyled">
               <li className="mb-2 d-flex align-items-center gap-4 contact_detail">
@@ -69,7 +69,7 @@ const Footer = () => {
           {/* <div className="col-md-1"></div> */}
 
           {/* Quick Links */}
-          <div className="col-md-2">
+          <div className="col-md-2 mb-3">
             <h6 className="footer_heading">Quick Links</h6>
             <ul className="list-unstyled">
               <li><a href="#" className="text-white text-decoration-none footer_text">About Us</a></li>
@@ -80,7 +80,7 @@ const Footer = () => {
           </div>
 
           {/* Services */}
-          <div className="col-md-2">
+          <div className="col-md-2 mb-3">
             <h6 className="footer_heading">Services</h6>
             <ul className="list-unstyled">
               <li><a href="#" className="text-white text-decoration-none footer_text">About Us</a></li>
@@ -91,7 +91,7 @@ const Footer = () => {
           </div>
 
           {/* Resource */}
-          <div className="col-md-2">
+          <div className="col-md-2 mb-3">
             <h6 className="footer_heading">Resource</h6>
             <ul className="list-unstyled">
               <li><a href="#" className="text-white text-decoration-none footer_text">About Us</a></li>

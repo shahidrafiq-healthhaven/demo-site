@@ -22,6 +22,7 @@ import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { faBuilding  } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -249,7 +250,8 @@ useEffect(() => {
                 <a href="/cart">
                   <div className="cart_btn_main">
                       <a href="/cart" className="cart_btn_2">Add to Cart</a>
-                      <img src={Cart} alt="" />
+                      <FontAwesomeIcon icon={faShoppingCart } className="text-white"/>
+                      {/* <img src={Cart} alt="" /> */}
                   </div>
                 </a>
             </div>

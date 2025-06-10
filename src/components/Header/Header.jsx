@@ -9,6 +9,12 @@ const Header = () => {
     <>
       <nav className="navbar navbar-expand-lg navbar-dark px-3">
         <div className="container">
+          <div className="mobile_cart_icon">
+            <a href="">
+              <img src={Cart} alt="cart"  className="cart_icon"/>
+            </a>
+          </div>
+
           <a className="navbar-brand d-flex align-items-center" href="/">
             <img
               src={Logo}
@@ -46,7 +52,7 @@ const Header = () => {
               </li>
             </ul>
 
-            <div className="d-flex align-items-center justify-content-center gap-4">
+            <div className="d-flex align-items-center justify-content-center gap-4 desktop_cart_icon">
                 <img src={User} alt="user"  className="user_icon"/>
                 <img src={Cart} alt="cart"  className="cart_icon"/>
               {/* <FaUser className="text-white me-3" style={{ cursor: "pointer" }} />

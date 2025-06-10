@@ -15,7 +15,8 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { faTrash  } from '@fortawesome/free-solid-svg-icons';
 import { faCreditCard   } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-
+import PhoneInput from 'react-phone-number-input'
+import 'react-phone-number-input/style.css'
  
 const Checkout = () => {
   const [step, setStep] = useState(1);
@@ -189,7 +190,13 @@ const Checkout = () => {
                       <div className="row mt-3">
                         <div className="col-sm-6">
                           <p>Your Mobile Number</p>
-                          <input type="tel" placeholder='(152) 435-6126' className='my-2 p-2 bg-white text-black' value={formData.mobile || ''} onChange={(e) => handleChange('mobile', e.target.value)} />
+                          {/* <input type="tel" placeholder='(152) 435-6126' className='my-2 p-2 bg-white text-black' value={formData.mobile || ''} onChange={(e) => handleChange('mobile', e.target.value)} /> */}
+                          <PhoneInput
+                          defaultCountry="US"
+                          className='my-2 p-2 bg-white text-black'
+                          placeholder="(451) 455-5555"
+                          value={formData.mobile || ''}
+                          onChange={(value) => handleChange('mobile', value)}/>
                         </div>
                       </div>
                       <div className="form-check mt-2 mb-3">

@@ -753,7 +753,7 @@ const Checkout = () => {
         </div>
 
         {/* Cart Summary (Right Side) */}
-        <div className="col-md-5 text-start">
+        <div className="col-md-5 text-start checkout_form_right">
           <div className="border rounded p-3">
             <h5 className='border-bottom pb-3'>My Cart</h5>
             <div className="d-flex justify-content-between py-2 text-primary">

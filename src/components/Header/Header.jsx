@@ -3,6 +3,7 @@ import { FaUser, FaShoppingCart } from "react-icons/fa";
 import Logo from '../../assets/images/logo.svg';
 import User from '../../assets/images/profile.png';
 import Cart from '../../assets/images/cart.png';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
@@ -39,16 +40,17 @@ const Header = () => {
           <div className="collapse navbar-collapse justify-content-between" id="navbarNav">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link" href="#about">About Us</a>
+                <Link to={`/aboutus`} className="nav-link" >About Us</Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#providers">For Providers</a>
+                <Link to={`/`} className="nav-link" >For Providers</Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#partners">For Partners</a>
+                <Link to={`/`} className="nav-link" >For Partners</Link>
+                {/* <Link to={`/partners`} className="nav-link" >For Partners</Link> */}
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#contact">Contact Us</a>
+                <Link to={`/contactus`} className="nav-link" >Contact Us</Link>
               </li>
             </ul>
 

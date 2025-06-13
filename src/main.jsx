@@ -9,12 +9,9 @@ import Product from './pages/Product.jsx'
 import ProductDetail from './pages/ProductDetail.jsx'
 import Cart from './pages/Cart.jsx'
 import Checkout from './pages/Checkout.jsx'
-
-// createRoot(document.getElementById('root')).render(
-//   <StrictMode>
-//     <App />
-//   </StrictMode>,
-// )
+import Aboutus from './pages/Aboutus.jsx'
+import Contactus from './pages/Contactus.jsx'
+import Partners from './pages/Partners.jsx'
 
 const router = createBrowserRouter([
   {
@@ -40,6 +37,18 @@ const router = createBrowserRouter([
       {
         path: "/checkout",
         element: <Checkout />
+      },
+      {
+        path: "/aboutus",
+        element: <Aboutus />
+      },
+      {
+        path: "/contactus",
+        element: <Contactus />
+      },
+      {
+        path: "/partners",
+        element: <Partners />
       },
       //   path: "/productdetails/:slug",
       //   element: <ProductDetail />

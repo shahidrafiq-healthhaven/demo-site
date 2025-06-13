@@ -4,10 +4,6 @@ import P1 from '../assets/images/p1.png';
 import P2 from '../assets/images/p2.png';
 import P3 from '../assets/images/p3.png';
 import P4 from '../assets/images/p4.png';
-import CartImg from '../assets/images/cart.png';
-import Partner1 from '../assets/images/partner_1.png';
-import Partner2 from '../assets/images/partner_2.webp';
-import Partner3 from '../assets/images/partner_3.png';
 import P1Img from '../assets/images/p1_img.png';
 import P2Img from '../assets/images/p2_img.png';
 import P3Img from '../assets/images/p3_img.png';
@@ -17,7 +13,6 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { faTrash  } from '@fortawesome/free-solid-svg-icons';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-
  
 const Cart = () => {
     const [quantity, setQuantity] = useState(1);

@@ -16,6 +16,7 @@ import Tiktok from '../../assets/images/tiktok_icon.png';
 import Location from '../../assets/images/location_icon.png';
 import Email from '../../assets/images/email_icon.png';
 import Phone from '../../assets/images/phone_icon.png';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -24,11 +25,11 @@ const Footer = () => {
     >
       <div className="container text-center text-md-start">
         <div className="row footer_top">
-            <div className="col-sm-6">
+            <div className="col-md-6">
                 <img src={Logo} alt="Health Haven RX" className="footer_logo"/>
             </div>
-            <div className="col-sm-6 text-end">
-                <div className="d-flex justify-content-md-end justify-content-center gap-3 social_main">
+            <div className="col-md-6 text-end">
+                <div className="d-flex justify-content-md-end justify-content-start gap-3 social_main">
                     <a href="#" className="social_icon">
                         <img src={Facebook} alt="Facebook"/>
                     </a>
@@ -57,12 +58,12 @@ const Footer = () => {
                 <span className="footer_text ms-2">5th Street, New York, USA</span>
               </li>
               <li className="mb-2 d-flex align-items-center gap-4 contact_detail">
-                 <img src={Email} alt="Email"/>
-                <span className="footer_text">example@gmail.com</span>
+                <img src={Email} alt="Email"/>
+                <a href="mailto:example@gmail.com" className="footer_text">example@gmail.com</a>
               </li>
               <li className="mb-2 d-flex align-items-center gap-4 contact_detail">
-                 <img src={Phone} alt="Phone"/>
-                <span className="footer_text">+1 123 456 789</span>
+                <img src={Phone} alt="Phone"/>
+                <a href="tel:+1 123 456 789" className="footer_text">+1 123 456 789</a>
               </li>
             </ul>
           </div>
@@ -72,10 +73,14 @@ const Footer = () => {
           <div className="col-md-2 mb-3">
             <h6 className="footer_heading">Quick Links</h6>
             <ul className="list-unstyled">
-              <li><a href="#" className="text-white text-decoration-none footer_text">About Us</a></li>
+              <li><Link to={`/aboutus`} className="text-white text-decoration-none footer_text" >About Us</Link></li>
+              <li><Link to={`/`} className="text-white text-decoration-none footer_text" >Our History</Link></li>
+              <li><Link to={`/`} className="text-white text-decoration-none footer_text" >FAQ</Link></li>
+              <li><Link to={`/contactus`} className="text-white text-decoration-none footer_text" >Contact Us</Link></li>
+              {/* <li><a href="#" className="text-white text-decoration-none footer_text">About Us</a></li>
               <li><a href="#" className="text-white text-decoration-none footer_text">Our History</a></li>
               <li><a href="#" className="text-white text-decoration-none footer_text">FAQ</a></li>
-              <li><a href="#" className="text-white text-decoration-none footer_text">Contact Us</a></li>
+              <li><a href="#" className="text-white text-decoration-none footer_text">Contact Us</a></li> */}
             </ul>
           </div>
 
@@ -83,10 +88,10 @@ const Footer = () => {
           <div className="col-md-2 mb-3">
             <h6 className="footer_heading">Services</h6>
             <ul className="list-unstyled">
-              <li><a href="#" className="text-white text-decoration-none footer_text">About Us</a></li>
-              <li><a href="#" className="text-white text-decoration-none footer_text">Our History</a></li>
-              <li><a href="#" className="text-white text-decoration-none footer_text">FAQ</a></li>
-              <li><a href="#" className="text-white text-decoration-none footer_text">Contact Us</a></li>
+                <li><Link to={`/aboutus`} className="text-white text-decoration-none footer_text" >About Us</Link></li>
+              <li><Link to={`/`} className="text-white text-decoration-none footer_text" >Our History</Link></li>
+              <li><Link to={`/`} className="text-white text-decoration-none footer_text" >FAQ</Link></li>
+              <li><Link to={`/contactus`} className="text-white text-decoration-none footer_text" >Contact Us</Link></li>
             </ul>
           </div>
 
@@ -94,10 +99,10 @@ const Footer = () => {
           <div className="col-md-2 mb-3">
             <h6 className="footer_heading">Resource</h6>
             <ul className="list-unstyled">
-              <li><a href="#" className="text-white text-decoration-none footer_text">About Us</a></li>
-              <li><a href="#" className="text-white text-decoration-none footer_text">Our History</a></li>
-              <li><a href="#" className="text-white text-decoration-none footer_text">FAQ</a></li>
-              <li><a href="#" className="text-white text-decoration-none footer_text">Contact Us</a></li>
+              <li><Link to={`/aboutus`} className="text-white text-decoration-none footer_text" >About Us</Link></li>
+              <li><Link to={`/`} className="text-white text-decoration-none footer_text" >Our History</Link></li>
+              <li><Link to={`/`} className="text-white text-decoration-none footer_text" >FAQ</Link></li>
+              <li><Link to={`/contactus`} className="text-white text-decoration-none footer_text" >Contact Us</Link></li>
             </ul>
           </div>
 

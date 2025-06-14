@@ -43,11 +43,10 @@ const Header = () => {
                 <Link to={`/aboutus`} className="nav-link" >About Us</Link>
               </li>
               <li className="nav-item">
-                <Link to={`/`} className="nav-link" >For Providers</Link>
+                <Link to={`/partners`} className="nav-link" >For Providers</Link>
               </li>
               <li className="nav-item">
-                <Link to={`/`} className="nav-link" >For Partners</Link>
-                {/* <Link to={`/partners`} className="nav-link" >For Partners</Link> */}
+                <Link to={`/partners`} className="nav-link" >For Partners</Link>
               </li>
               <li className="nav-item">
                 <Link to={`/contactus`} className="nav-link" >Contact Us</Link>
@@ -55,7 +54,9 @@ const Header = () => {
             </ul>
 
             <div className="d-flex align-items-center justify-content-center gap-4 desktop_cart_icon">
-                <img src={User} alt="user"  className="user_icon"/>
+                <Link to={`/`} >
+                  <img src={User} alt="user"  className="user_icon"/>
+                </Link>
                 <img src={Cart} alt="cart"  className="cart_icon"/>
               {/* <FaUser className="text-white me-3" style={{ cursor: "pointer" }} />
               <FaShoppingCart className="text-white" style={{ cursor: "pointer" }} /> */}

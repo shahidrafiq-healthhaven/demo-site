@@ -2,6 +2,15 @@
 import P1Img from '../assets/images/p1_img.png';
 import P2Img from '../assets/images/p2_img.png';
 import P3Img from '../assets/images/p3_img.png';
+import PartnerS1 from '../assets/images/partners_s1_img.svg';
+import PartnerS2I1 from '../assets/images/partners_s2_i1.svg';
+import PartnerS2I2 from '../assets/images/partners_s2_i2.svg';
+import PartnerS2I3 from '../assets/images/partners_s2_i3.svg';
+import PartnerS2Img from '../assets/images/partners_s2_img.svg';
+import PartnerS3Img from '../assets/images/partners_s3_img.svg';
+import PartnerS4Img from '../assets/images/partners_s4_img.svg';
+import PartnerS5Img from '../assets/images/partners_s5_img.svg';
+import PartnerCodeIcon from '../assets/images/partner_code_icon.svg';
 import { Link } from 'react-router-dom';
 
 function Partners() {
@@ -44,7 +53,7 @@ function Partners() {
                     </div>
                     <div className="col-md-6">
                         <div className="partner_s1_right">
-                            <img src="" alt="" /> 
+                            <img src={PartnerS1} alt="" className='w-100'/> 
                         </div>
                     </div>
                 </div>
@@ -56,17 +65,17 @@ function Partners() {
                 <h3>Capabilities for your team</h3>
                 <div className="d-flex flex-wrap justify-content-center gap-5">
                     <div className="partner_s2_circule">
-                        <img src="" alt="" /> 
+                        <img src={PartnerS2I1} alt="" /> 
                         <h4>Comprehensive</h4>
                         <p>No more insurance means no more pre-authorizations, coverage changes, quantity limits</p>
                     </div>
                     <div className="partner_s2_circule">
-                        <img src="" alt="" /> 
+                        <img src={PartnerS2I2} alt="" /> 
                         <h4>Technology-driven</h4>
                         <p>No more insurance means no more pre-authorizations, coverage changes, quantity limits</p>
                     </div>
                     <div className="partner_s2_circule">
-                        <img src="" alt="" /> 
+                        <img src={PartnerS2I3} alt="" /> 
                         <h4>Transparent</h4>
                         <p>No more insurance means no more pre-authorizations, coverage changes, quantity limits</p>
                     </div>
@@ -93,6 +102,64 @@ function Partners() {
                     <div className="col-sm-3 text-center">
                     <h1>260+</h1>
                     <p>Active Member</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div className="partner_section_4">
+            <div className="container">
+                <h1 className='text-center'>All your pharmacy service under the same hive.</h1>
+                <div className="partner_section_4_subsection">
+                    <div className="row">
+                        <div className="col-md-6 partner_s4_image_main">
+                            <img src={PartnerS2Img} alt="" className='w-100' />
+                        </div>
+                        <div className="col-md-6 text-start">
+                            <img src={PartnerCodeIcon} alt="" className='codeimge'/>
+                            <h2>Technology-enabled...</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            <Link to="/partners" className="btn_primary">For Developers</Link>
+                        </div>
+                    </div>
+                </div>
+                <div className="partner_section_4_subsection">
+                    <div className="row flex_column_reverse">
+                        <div className="col-md-6 text-start">
+                            <img src={PartnerCodeIcon} alt="" className='codeimge'/>
+                            <h2>Pharmacy fullillment</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            <Link to="/partners" className="btn_primary">For Pharmacy</Link>
+                        </div>
+                        <div className="col-md-6 partner_s4_image_main">
+                            <img src={PartnerS3Img} alt="" className='w-100'/>
+                        </div>
+                    </div>
+                </div>
+                <div className="partner_section_4_subsection">
+                    <div className="row">
+                        <div className="col-md-6 partner_s4_image_main">
+                            <img src={PartnerS4Img} alt="" className='w-100'/>
+                        </div>
+                        <div className="col-md-6 text-start">
+                            <img src={PartnerCodeIcon} alt="" className='codeimge' />
+                            <h2>In your hand</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            <Link to="/partners" className="btn_primary">For Developers</Link>
+                        </div>
+                    </div>
+                </div>
+                <div className="partner_section_4_subsection">
+                    <div className="row flex_column_reverse">
+                        <div className="col-md-6 text-start">
+                            <img src={PartnerCodeIcon} alt="" className='codeimge'/>
+                            <h2>With humans in mind</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            <Link to="/partners" className="btn_primary">For Developers</Link>
+                        </div>
+                        <div className="col-md-6 partner_s4_image_main">
+                            <img src={PartnerS5Img} alt="" className='w-100'/>
+                        </div>
                     </div>
                 </div>
             </div>

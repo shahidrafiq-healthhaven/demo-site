@@ -12,6 +12,7 @@ import Checkout from './pages/Checkout.jsx'
 import Aboutus from './pages/Aboutus.jsx'
 import Contactus from './pages/Contactus.jsx'
 import Partners from './pages/Partners.jsx'
+import Login from './pages/Login.jsx'
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: "/partners",
         element: <Partners />
+      },
+      {
+        path: "/login",
+        element: <Login />
       },
       //   path: "/productdetails/:slug",
       //   element: <ProductDetail />

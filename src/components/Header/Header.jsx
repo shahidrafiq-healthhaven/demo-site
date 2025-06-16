@@ -40,20 +40,24 @@ const Header = () => {
           <div className="collapse navbar-collapse justify-content-between" id="navbarNav">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link to={`/aboutus`} className="nav-link" >About Us</Link>
+                {/* <Link to={`/aboutus`} className="nav-link" >About Us</Link> */}
+                <Link to={`/`} className="nav-link" >About Us</Link>
               </li>
               <li className="nav-item">
-                <Link to={`/partners`} className="nav-link" >For Providers</Link>
+                <Link to={`/`} className="nav-link" >For Providers</Link>
               </li>
               <li className="nav-item">
-                <Link to={`/partners`} className="nav-link" >For Partners</Link>
+                {/* <Link to={`/partners`} className="nav-link" >For Partners</Link> */}
+                <Link to={`/`} className="nav-link" >For Partners</Link>
               </li>
               <li className="nav-item">
-                <Link to={`/contactus`} className="nav-link" >Contact Us</Link>
+                {/* <Link to={`/contactus`} className="nav-link" >Contact Us</Link> */}
+                <Link to={`/`} className="nav-link" >Contact Us</Link>
               </li>
             </ul>
 
             <div className="d-flex align-items-center justify-content-center gap-4 desktop_cart_icon">
+                {/* <Link to={`/login`} > */}
                 <Link to={`/`} >
                   <img src={User} alt="user"  className="user_icon"/>
                 </Link>

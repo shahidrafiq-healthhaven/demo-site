@@ -73,10 +73,10 @@ const Footer = () => {
           <div className="col-md-2 mb-3">
             <h6 className="footer_heading">Quick Links</h6>
             <ul className="list-unstyled">
-              <li><Link to={`/`} className="text-white text-decoration-none footer_text" >About Us</Link></li>
+              <li><Link to={`/aboutus`} className="text-white text-decoration-none footer_text" >About Us</Link></li>
               <li><Link to={`/`} className="text-white text-decoration-none footer_text" >Our History</Link></li>
               <li><Link to={`/`} className="text-white text-decoration-none footer_text" >FAQ</Link></li>
-              <li><Link to={`/`} className="text-white text-decoration-none footer_text" >Contact Us</Link></li>
+              <li><Link to={`/contactus`} className="text-white text-decoration-none footer_text" >Contact Us</Link></li>
               {/* <li><a href="#" className="text-white text-decoration-none footer_text">About Us</a></li>
               <li><a href="#" className="text-white text-decoration-none footer_text">Our History</a></li>
               <li><a href="#" className="text-white text-decoration-none footer_text">FAQ</a></li>
@@ -88,10 +88,10 @@ const Footer = () => {
           <div className="col-md-2 mb-3">
             <h6 className="footer_heading">Services</h6>
             <ul className="list-unstyled">
-                <li><Link to={`/`} className="text-white text-decoration-none footer_text" >About Us</Link></li>
+              <li><Link to={`/aboutus`} className="text-white text-decoration-none footer_text" >About Us</Link></li>
               <li><Link to={`/`} className="text-white text-decoration-none footer_text" >Our History</Link></li>
               <li><Link to={`/`} className="text-white text-decoration-none footer_text" >FAQ</Link></li>
-              <li><Link to={`/`} className="text-white text-decoration-none footer_text" >Contact Us</Link></li>
+              <li><Link to={`/contactus`} className="text-white text-decoration-none footer_text" >Contact Us</Link></li>
             </ul>
           </div>
 
@@ -99,10 +99,10 @@ const Footer = () => {
           <div className="col-md-2 mb-3">
             <h6 className="footer_heading">Resource</h6>
             <ul className="list-unstyled">
-              <li><Link to={`/`} className="text-white text-decoration-none footer_text" >About Us</Link></li>
+              <li><Link to={`/aboutus`} className="text-white text-decoration-none footer_text" >About Us</Link></li>
               <li><Link to={`/`} className="text-white text-decoration-none footer_text" >Our History</Link></li>
               <li><Link to={`/`} className="text-white text-decoration-none footer_text" >FAQ</Link></li>
-              <li><Link to={`/`} className="text-white text-decoration-none footer_text" >Contact Us</Link></li>
+              <li><Link to={`/contactus`} className="text-white text-decoration-none footer_text" >Contact Us</Link></li>
             </ul>
           </div>
 

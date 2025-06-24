@@ -818,18 +818,20 @@ h4{
 }
 .contact_social_card_top{
   padding: 110px 0px;
+  border-radius: 8px;
 }
 .contact_social_card_top h5{
   font-size: 35px;
+  color: #fff;
 }
 .contact_social_card_1{
-  background-color: #EEFCFB;
+  background-color: #005CE6;
 }
 .contact_social_card_2{
-  background-color: #FFF9EE;
+  background-color: #001C47;
 }
 .contact_social_card_3{
-  background-color: #F1F9FE;
+  background-color: #005CE6;
 }
 .contact_form_parent{
   margin-bottom: 80px;
@@ -875,7 +877,8 @@ h4{
   margin-bottom: 40px !important;
 }
 .partner_section_2{
-  background: linear-gradient(99deg, rgba(14, 92, 254, 1) 0%, rgba(194, 3, 236, 1) 100%);
+  /* background: linear-gradient(99deg, rgba(14, 92, 254, 1) 0%, rgba(194, 3, 236, 1) 100%); */
+  background-color: #005CE6;
   padding: 100px 0px;
 }
 .partner_section_2 h3{

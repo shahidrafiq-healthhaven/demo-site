@@ -2,15 +2,15 @@
 import P1Img from '../assets/images/p1_img.png';
 import P2Img from '../assets/images/p2_img.png';
 import P3Img from '../assets/images/p3_img.png';
-import PartnerS1 from '../assets/images/partners_s1_img.svg';
-import PartnerS2I1 from '../assets/images/partners_s2_i1.svg';
-import PartnerS2I2 from '../assets/images/partners_s2_i2.svg';
-import PartnerS2I3 from '../assets/images/partners_s2_i3.svg';
+import PartnerS1 from '../assets/images/partner_s1_img.svg';
+import PartnerS2I1 from '../assets/images/partner_s2_i1.svg';
+import PartnerS2I2 from '../assets/images/partner_s2_i2.svg';
+import PartnerS2I3 from '../assets/images/partner_s2_i3.svg';
 import PartnerS2Img from '../assets/images/partners_s2_img.svg';
 import PartnerS3Img from '../assets/images/partners_s3_img.svg';
 import PartnerS4Img from '../assets/images/partners_s4_img.svg';
 import PartnerS5Img from '../assets/images/partners_s5_img.svg';
-import PartnerCodeIcon from '../assets/images/partner_code_icon.svg';
+import PartnerCodeIcon from '../assets/images/code_icon.svg';
 import { Link } from 'react-router-dom';
 
 function Partners() {

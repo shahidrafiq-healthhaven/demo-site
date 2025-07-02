@@ -15,7 +15,10 @@ import News2 from '../assets/images/new_2.webp';
 import News3 from '../assets/images/new_3.webp';
 import News4 from '../assets/images/new_4.webp';
 import News5 from '../assets/images/new_5.webp';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { BallTriangle } from 'react-loader-spinner';
+import { Vortex } from 'react-loader-spinner';
+import axios from 'axios';
 
  const forms = [
     { label: 'Tablet', value: 'tablet' },
@@ -106,16 +109,55 @@ const faqData = [
   { question: "How does Cialis differ from Viagra?", answer: "Cialis and Viagra are both very effective in treatment of ED, but some prefer Cialis due to its longer duration of action." }
 ];
 const Product = () => {
-    const [selectedForm, setSelectedForm] = useState('tablet');
+    // const [selectedForm, setSelectedForm] = useState('Tablets');
     const [selectedStrength, setSelectedStrength] = useState("2.5mg");
     const [selectedPackageSize, setSelectedPackageSize] = useState();
     const [displayedProducts, setDisplayedProducts] = useState([]);
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(false)
     const [showMore, setShowMore] = useState(false);
     const contentRef = useRef(null);
+    const { slug } = useParams();
+    const [drugForm, setDrugForm] = useState();
+    const [drugType, setDrugType] = useState();
+    const [productName, setProductName] = useState();
+    const [productPrice, setProductPrice] = useState();
 
-useEffect(() => {
-    setDisplayedProducts(allProducts[selectedStrength] || []);
-  }, [selectedStrength]);
+    useEffect(() => {
+        setDisplayedProducts(allProducts[selectedStrength] || []);
+    }, [selectedStrength]);
+
+    useEffect(()=>{
+        getProductDetail();
+    }, [])
+
+  const getProductDetail = () => {
+  // const token = localStorage.getItem('token');
+  axios.get(`/api/web/drugs/${ slug }`, {
+    headers: {
+      'Content-Type': 'application/json',
+      // ...(token && { Authorization: `Bearer ${token}` }),
+    },
+  })
+  .then((response) => {
+    console.log('API response:', response.data);
+    if(response.data.statusCode == 200){
+        console.log('drugs:', response.data.response.drug);
+        console.log('setDrugForm:', response.data.response.drug.DrugForm.name);
+        setDrugForm(response.data.response.drug.DrugForm.name);
+        setDrugType(response.data.response.drug.DrugType.name);
+        setProductName(response.data.response.drug.name);
+        setProductPrice(response.data.response.drug.price);
+    }
+    setLoading(false);
+    setError(false);
+  })
+  .catch((error) => {
+    console.error('Error fetching data:', error);
+    setError(true);
+    setLoading(false);
+  });
+};
 
   // Calculate price based on package size
   const calculatePrice = (basePrice) => {
@@ -123,13 +165,13 @@ useEffect(() => {
     return basePrice * multiplier;
   };
 
-  return (
+return !loading ?(
     <div className="container">
         <div className="row mt-5 text-start">
             <div className="col-md-3 product_left">
                 <label className="form-label">FORM</label>
                 <div className="d-flex flex-wrap gap-3 mb-4">
-                    {forms.map((form) => (
+                    {/* {forms.map((form) => (
                         <label
                         key={form.value}
                         className={`btn btn-outline-primary ${
@@ -147,7 +189,36 @@ useEffect(() => {
                         />
                         {form.label}
                         </label>
-                    ))}
+                    ))} */}
+                    {drugForm && (
+                    <label  className={`btn btn-outline-primary active`}>
+                        <input
+                        type="radio"
+                        className="btn-check radio_btn_cart"
+                        name="custom-radio"
+                        value={drugForm}
+                        autoComplete="off"
+                        />
+                        {drugForm}
+                    </label>
+                    )}
+
+                </div>
+                <label className="form-label">TYPE</label>
+                <div className="d-flex flex-wrap gap-3 mb-4">
+                    {drugType && (
+                    <label  className={`btn btn-outline-primary active`} >
+                        <input
+                        type="radio"
+                        className="btn-check radio_btn_cart"
+                        name="custom-radio"
+                        value={drugType}
+                        autoComplete="off"
+                        />
+                        {drugType}
+                    </label>
+                    )}
+
                 </div>
                 <label className="form-label">STRENGTH</label>
                 <div className="d-flex flex-wrap gap-3 mb-4">
@@ -194,7 +265,7 @@ useEffect(() => {
                     ))}
                 </div>
             </div>
-             {displayedProducts.map((product, index) => (
+             {/* {displayedProducts.map((product, index) => (
                 <div className="col-md-3" key={index}>
                 <div className="product_card mb-3">
                     <div className="product_image mb-2">
@@ -220,24 +291,24 @@ useEffect(() => {
                     </div>
                 </div>
                 </div>
-            ))}
-            {/* <div className="col-sm-3">
+            ))} */}
+            <div className="col-sm-3">
                 <div className="product_card">
                     <div className="product_image">
                         <img src={P1} alt="" />
                     </div>
-                    <h4>Tadalafil(Cialis)</h4>
+                    <h4>{productName}</h4>
                     <p>By Amneal</p>
                     <div className="row product_card_bottom">
                         <div className="col-6">
-                            <h2><small>$</small>51.00</h2>
+                            <h2><small>$</small> {Number(productPrice).toFixed(2)}</h2>
                         </div>
                         <div className="col-6">
-                            <a href="/" className="cart_btn">Add to Cart</a>
+                            <a href="/cart" className="cart_btn">Add to Cart</a>
                         </div>
                     </div>
                 </div>
-            </div>*/}
+            </div>
         </div>
      
         <div className="product_question_main">
@@ -245,7 +316,7 @@ useEffect(() => {
             <p>Our "pharmacist pick" is a combination of a few different factors. First, we take into account what is most requested and well-reviewed by patients. Our pharmacists also consider how long a manufacturer has been making a given drug, and the general reputation of the manufacturer.</p>
         </div>
          <div className="product_question_main">
-            <h4 className="product_question">Uses of Tadalafil (Cialis)</h4>
+            <h4 className="product_question">Uses of {productName}</h4>
             <p>Tadalafil is the generic form  of the brand-name medication Cialis. Tadalafil is most commonly  used to treat erectile dysfunction (ED), although it can also be used to treat an enlarged prostate.</p>
             <div className="mt-3">
                 <div ref={contentRef} className={`content-wrapper ${showMore ? 'open' : ''}`}>
@@ -271,7 +342,7 @@ useEffect(() => {
                     </p>
                 </div>
                  <h5 className="text-primary" role="button" onClick={() => setShowMore((prev) => !prev)}>
-                    {showMore ? 'Less about Tadalafil (Cialis)' : 'More about Tadalafil (Cialis)'}
+                    {showMore ? `Less about ${productName}` : `More about ${productName}`}
                 </h5>
             </div>
          </div>
@@ -280,7 +351,7 @@ useEffect(() => {
         {/* FAQ Section */}
         <div className="faq_main product_faqs">
             <div className="container">
-                <h2 className="heading_primary">Tadalafil (Cialis) FAQs</h2>
+                <h2 className="heading_primary">{productName} FAQs</h2>
                 <p>IMPORTANT: The FAQ answers below do NOT contain all the information about this particular drug. These answers are not substitutes for a medication guide, pharmacist consultation or the advice of your health care professional. For the official medication guide or further questions please call our pharmacists at 1-833-466-3979.</p>
                 
                 <div className="container my-5">
@@ -370,7 +441,21 @@ useEffect(() => {
        </div>
 
     </div>
-  );
+     ) : 
+    (
+    <div  className='d-flex justify-content-center align-items-center' style={{height : "100vh"}}>
+        <Vortex
+        visible={true}
+        height="100"
+        width="100"
+        ariaLabel="vortex-loading"
+        wrapperStyle={{}}
+        wrapperClass="vortex-wrapper"
+        colors={['#005CE6', '#001C47', 'rgba(194, 3, 236, 1)', '#005CE6', '#001C47', 'rgba(194, 3, 236, 1)']}
+        />
+    </div>
+        
+  )
 };
 
 export default Product;

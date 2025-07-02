@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: "/cialis",
+        path: "/cialis/:slug",
         element: <Product />
       },
       {

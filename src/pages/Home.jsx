@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import BannerLeftImage from '../assets/images/banner_left_img.png';
 import BannerRightImage from '../assets/images/banner_right_img.png';
 import SearchIcon from '../assets/images/search_icon.png';
@@ -22,17 +22,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { Accordion } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
+import axios from 'axios';
 
 const popularSearches = ['Cialis', 'Wellbutrin', 'Synthroid', 'Lipitor', 'Viagra', 'Lexapro'];
-const allProducts  = [
-  { name: 'Pramipexole (Mirapex ER)', price: '$90.00' },
-  { name: 'Divalproex Extended Release (Depakote Er)', price: '$10.30', subtext: '3 choices' },
-  { name: 'Galantamine Extended-Release (Razadyne Er)', price: '$30.00' },
-  { name: 'Trospium Chloride ER', price: '$147.00' },
-  { name: 'Fluvoxamine Maleate Er (Luvox Cr)', price: '$190.05' },
-  { name: 'Dapagliflozin/Metformin ER (Xigduo XR)', price: '$470.00' },
-];
+
+// const allProducts  = [
+//   { name: 'Pramipexole (Mirapex ER)', price: '$90.00' },
+//   { name: 'Divalproex Extended Release (Depakote Er)', price: '$10.30', subtext: '3 choices' },
+//   { name: 'Galantamine Extended-Release (Razadyne Er)', price: '$30.00' },
+//   { name: 'Trospium Chloride ER', price: '$147.00' },
+//   { name: 'Fluvoxamine Maleate Er (Luvox Cr)', price: '$190.05' },
+//   { name: 'Dapagliflozin/Metformin ER (Xigduo XR)', price: '$470.00' },
+// ];
 const faqData = [
   { question: "How do I place an order for my medication?", answer: "You can place an order through our online portal after logging in." },
   { question: "Do I need a prescription to buy medication?", answer: "Yes, a valid prescription is required for most medications." },
@@ -46,10 +47,45 @@ const faqData = [
 function Home() {
   const [isFocused, setIsFocused] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  
+  useEffect(() => {
+    if (searchTerm.length >= 2) {
+      const delayDebounce = setTimeout(() => {
+        getSearch(searchTerm);
+      }, 500); 
 
-  const filteredProducts = allProducts.filter(item =>
-    item.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+      return () => clearTimeout(delayDebounce);
+    }
+    else {
+      setFilteredProducts([]); // clear if less than 2 chars
+    }
+  }, [searchTerm]);
+
+  const getSearch = (name) => {
+  // const token = localStorage.getItem('token');
+  axios.get(`/api/web/drugs/search?name=${encodeURIComponent(name)}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      // ...(token && { Authorization: `Bearer ${token}` }),
+    },
+  })
+  .then((response) => {
+    console.log('API response:', response.data);
+    if(response.data.statusCode == 200){
+      console.log('drugs:', response.data.response.drugs);
+      const drugs = response.data.response?.drugs || [];
+      setFilteredProducts(drugs);
+    }
+  })
+  .catch((error) => {
+    console.error('Error fetching data:', error);
+  });
+};
+
+  // const filteredProducts = allProducts.filter(item =>
+  //   item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
   return (
     <div>
       <div className="main_banner">
@@ -62,91 +98,69 @@ function Home() {
           <div className="search_main">
             <p className='seacrt_text_top'>Start your search here</p>
             <div className="seacrh_input_main">
-              {/*<div className="input-group ">
+      
+              <div className="position-relative w-100" >
+                <div className="input-group ">
                 <button className="search_bar_button" type="submit"><a href=""> <img src={SearchIcon} alt="SearchIcon" /></a>
                 </button>
-                 <input type="text" className="form-control" aria-label="Text input with dropdown button"placeholder="Search your medication (like Atorvastatin, Sildenafil, etc.)"   onFocus={() => setIsFocused(true)}
-                onBlur={() => setTimeout(() => setIsFocused(false), 200)}/>
-                  {isFocused && (
-                    <div className="dropdown-box position-absolute bg-white shadow rounded p-3 w-100" >
-                      <p className="text-muted small mb-2">POPULAR SEARCHES</p>
-                      <div className="d-flex flex-wrap gap-2">
-                        {popularSearches.map((item, index) => (
-                          <Link
-                            key={index}
-                            to={`Cialis`}
-                            className="btn btn-link p-0 text-primary text-decoration-none"
-                          >
-                            {item}
-                          </Link>
-                        ))}
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search your medication (like Atorvastatin, Sildenafil, etc.)"
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={() => setTimeout(() => setIsFocused(false), 200)}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
 
-                      </div>
-                    </div>
-                  )} */}
-                   <div className="position-relative w-100" >
-                     <div className="input-group ">
-                    <button className="search_bar_button" type="submit"><a href=""> <img src={SearchIcon} alt="SearchIcon" /></a>
-                    </button>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Search your medication (like Atorvastatin, Sildenafil, etc.)"
-                      onFocus={() => setIsFocused(true)}
-                      onBlur={() => setTimeout(() => setIsFocused(false), 200)}
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                    </div>
-
-                    {isFocused && (
-                      <div className="position-absolute bg-white shadow rounded p-3 w-100" style={{ zIndex: 1000 }}>
-                        {searchTerm === '' ? (
-                          <>
-                            <p className="text-muted small mb-2">POPULAR SEARCHES</p>
-                            <div className="d-flex flex-wrap gap-2">
-                              {popularSearches.map((item, index) => (
-                                <Link
-                                  key={index}
-                                  to={`/cialis`}
-                                  className="btn btn-link p-0 text-primary text-decoration-none"
-                                >
-                                  {item}
-                                </Link>
-                              ))}
-                            </div>
-                          </>
+                {isFocused && (
+                  <div className="position-absolute bg-white shadow rounded p-3 w-100" style={{ zIndex: 1000, maxHeight: '300px', overflowY: 'auto' }}>
+                    {searchTerm === '' ? (
+                      <>
+                        <p className="text-muted small mb-2">POPULAR SEARCHES</p>
+                        <div className="d-flex flex-wrap gap-2">
+                          {popularSearches.map((item, index) => (
+                            <Link
+                              key={index}
+                              to={`/cialis/2`}
+                              className="btn btn-link p-0 text-primary text-decoration-none"
+                            >
+                              {item}
+                            </Link>
+                          ))}
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <p className="text-muted small mb-2">RESULTS</p>
+                        {filteredProducts.length > 0 ? (
+                          filteredProducts.map((item, index) => (
+                            <Link
+                              key={index}
+                              to={`/cialis/${item.id}`}
+                              className="d-flex justify-content-between text-decoration-none text-dark px-2 py-1 rounded hover-bg-light"
+                            >
+                              <span>{item.name}</span>
+                              <span className="text-primary">${Number(item.price).toFixed(2)}</span>
+                            </Link>
+                          ))
                         ) : (
-                          <>
-                            <p className="text-muted small mb-2">RESULTS</p>
-                            {filteredProducts.length > 0 ? (
-                              filteredProducts.map((item, index) => (
-                                <Link
-                                  key={index}
-                                  to={`/cialis`}
-                                  className="d-flex justify-content-between text-decoration-none text-dark px-2 py-1 rounded hover-bg-light"
-                                >
-                                  <span>{item.name}</span>
-                                  <span className="text-primary">{item.price}</span>
-                                </Link>
-                              ))
-                            ) : (
-                              <p className="text-muted small mb-0">No matches found.</p>
-                            )}
-                          </>
+                          <p className="text-muted small mb-0">No matches found.</p>
                         )}
-                      </div>
+                      </>
                     )}
                   </div>
-              {/* </div> */}
+                )}
+              </div>
               <p className='seacrh_text_bottom'>POPULAR SEARCHES</p>
               <div className="search_bottom_btn_main">
-                <a href="/cialis" className='Search_bottom_btn'>Cialis</a>
-                <a href="/cialis" className='Search_bottom_btn'>Wellbutrin</a>
-                <a href="/cialis" className='Search_bottom_btn'>Synthroid</a>
-                <a href="/cialis" className='Search_bottom_btn'>Lipitor</a>
-                <a href="/cialis" className='Search_bottom_btn'>Viagra</a>
-                <a href="/cialis" className='Search_bottom_btn'>Lexapro</a>
+                <a href="/cialis/2" className='Search_bottom_btn'>Cialis</a>
+                <a href="/cialis/2" className='Search_bottom_btn'>Wellbutrin</a>
+                <a href="/cialis/2" className='Search_bottom_btn'>Synthroid</a>
+                <a href="/cialis/2" className='Search_bottom_btn'>Lipitor</a>
+                <a href="/cialis/2" className='Search_bottom_btn'>Viagra</a>
+                <a href="/cialis/2" className='Search_bottom_btn'>Lexapro</a>
               </div>
             </div>
           </div>

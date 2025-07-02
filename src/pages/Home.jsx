@@ -25,7 +25,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const popularSearches = ['Cialis', 'Wellbutrin', 'Synthroid', 'Lipitor', 'Viagra', 'Lexapro'];
-
+// 123242
 // const allProducts  = [
 //   { name: 'Pramipexole (Mirapex ER)', price: '$90.00' },
 //   { name: 'Divalproex Extended Release (Depakote Er)', price: '$10.30', subtext: '3 choices' },

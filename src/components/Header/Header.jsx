@@ -1,11 +1,27 @@
-import React from "react";
+import React, {useState  }  from "react";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
 import Logo from '../../assets/images/logo.svg';
 import User from '../../assets/images/profile.png';
 import Cart from '../../assets/images/cart.png';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Header = () => {
+  const navigate = useNavigate();
+  const [summary, setSummary] = useState({ subtotal: 0, shipping: 0, total: 0 });
+
+  const handleCartClick = () => {
+    const stored = localStorage.getItem('cartSummary');
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      setSummary(parsed); 
+      navigate(`/cart/${parsed.productid}`);
+    } else {
+      toast.warning('Your cart is empty!');
+    }
+  };
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark px-3">
@@ -58,7 +74,7 @@ const Header = () => {
                 <Link to={`/`} >
                   <img src={User} alt="user"  className="user_icon"/>
                 </Link>
-                <img src={Cart} alt="cart"  className="cart_icon"/>
+                <img src={Cart} alt="cart"  className="cart_icon" style={{ cursor: 'pointer' }} onClick={handleCartClick}/>
               {/* <FaUser className="text-white me-3" style={{ cursor: "pointer" }} />
               <FaShoppingCart className="text-white" style={{ cursor: "pointer" }} /> */}
             </div>

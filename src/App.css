@@ -587,9 +587,9 @@ h4{
   max-width: fit-content;
   margin-top: 0px;
 }
-.product_left .btn, .product_detail_right .btn{
+/* .product_left .btn, .product_detail_right .btn{
   width: 80px;
-}
+} */
 .quetions_btn_main .quetions_btn_1{
   background: linear-gradient(99deg, rgba(14, 92, 254, 1) 0%, rgba(194, 3, 236, 1) 100%);
   padding: 10px 15px;

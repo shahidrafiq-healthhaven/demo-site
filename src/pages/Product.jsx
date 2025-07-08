@@ -120,6 +120,8 @@ const Product = () => {
     const { slug } = useParams();
     const [drugForm, setDrugForm] = useState();
     const [drugType, setDrugType] = useState();
+    const [drugCategory, setDrugCategory] = useState();
+    const [drugStrengths, setDrugStrengths] = useState();
     const [productName, setProductName] = useState();
     const [productPrice, setProductPrice] = useState();
 
@@ -144,8 +146,11 @@ const Product = () => {
     if(response.data.statusCode == 200){
         console.log('drugs:', response.data.response.drug);
         console.log('setDrugForm:', response.data.response.drug.DrugForm.name);
+        // console.log('setDrugStrengths:', response.data.response.drug.strengths.name);
         setDrugForm(response.data.response.drug.DrugForm.name);
         setDrugType(response.data.response.drug.DrugType.name);
+        setDrugCategory(response.data.response.drug.DrugCategory.name);
+        setDrugStrengths(response.data.response.drug.strengths);
         setProductName(response.data.response.drug.name);
         setProductPrice(response.data.response.drug.price);
     }
@@ -160,10 +165,10 @@ const Product = () => {
 };
 
   // Calculate price based on package size
-  const calculatePrice = (basePrice) => {
-    const multiplier = selectedPackageSize === '60' ? 2 : 1;
-    return basePrice * multiplier;
-  };
+//   const calculatePrice = (basePrice) => {
+//     const multiplier = selectedPackageSize === '60' ? 2 : 1;
+//     return basePrice * multiplier;
+//   };
 
 return !loading ?(
     <div className="container">
@@ -220,29 +225,44 @@ return !loading ?(
                     )}
 
                 </div>
+                <label className="form-label">Category</label>
+                <div className="d-flex flex-wrap gap-3 mb-4">
+                    {drugCategory && (
+                    <label  className={`btn btn-outline-primary active`} >
+                        <input
+                        type="radio"
+                        className="btn-check radio_btn_cart"
+                        name="custom-radio"
+                        value={drugCategory}
+                        autoComplete="off"
+                        />
+                        {drugCategory}
+                    </label>
+                    )}
+
+                </div>
                 <label className="form-label">STRENGTH</label>
                 <div className="d-flex flex-wrap gap-3 mb-4">
-                    {strengths.map((option) => (
+                    {drugStrengths.map((option) => (
                         <label
-                        key={option.value}
+                        key={option.name}
                         className={`btn btn-outline-primary ${
-                            selectedStrength === option.value ? 'active' : ''
+                            productName === option.name ? 'active' : ''
                         }`}
                         >
                         <input
                             type="radio"
                             className="btn-check radio_btn_cart"
                             name="custom-radio"
-                            value={option.value}
-                            checked={selectedStrength === option.value}
+                            value={option.name}
                             onChange={(e) => setSelectedStrength(e.target.value)}
                             autoComplete="off"
                         />
-                        {option.label}
+                        {option.name}
                         </label>
                     ))}
                 </div>
-                <label className="form-label">PACKAGE SIZE</label>
+                {/* <label className="form-label">PACKAGE SIZE</label>
                 <div className="d-flex flex-wrap gap-3 mb-4">
                     {sizes.map((size) => (
                         <label
@@ -263,7 +283,7 @@ return !loading ?(
                         {size.label}
                         </label>
                     ))}
-                </div>
+                </div> */}
             </div>
              {/* {displayedProducts.map((product, index) => (
                 <div className="col-md-3" key={index}>
@@ -304,7 +324,7 @@ return !loading ?(
                             <h2><small>$</small> {Number(productPrice).toFixed(2)}</h2>
                         </div>
                         <div className="col-6">
-                            <a href="/cart" className="cart_btn">Add to Cart</a>
+                            <a href={`/cart/${slug}`} className="cart_btn">Add to Cart</a>
                         </div>
                     </div>
                 </div>

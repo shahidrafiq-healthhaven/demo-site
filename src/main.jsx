@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: "/cialis/:slug",
+        path: "/product/:slug",
         element: <Product />
       },
       {
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
         element: <ProductDetail />
       },
       {
-        path: "/cart",
+        path: "/cart/:slug",
         element: <Cart />
       },
       {

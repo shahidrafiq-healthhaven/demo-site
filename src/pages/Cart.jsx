@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo  } from 'react';
 import { Accordion } from 'react-bootstrap';
 import P1 from '../assets/images/p1.png';
 import P2 from '../assets/images/p2.png';
@@ -12,14 +12,61 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { faTrash  } from '@fortawesome/free-solid-svg-icons';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { Vortex } from 'react-loader-spinner';
+import axios from 'axios';
  
 const Cart = () => {
     const [quantity, setQuantity] = useState(1);
+    const { slug } = useParams();
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+    const [drugForm, setDrugForm] = useState();
+    const [productName, setProductName] = useState();
+    const [productPrice, setProductPrice] = useState();
+    const [mgValue, setMgValue] = useState();
 
     const handleIncrease = () => setQuantity(quantity + 1);
     const handleDecrease = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
-  return (
+
+    const subtotal = useMemo(() => quantity * productPrice, [quantity, productPrice]);
+    const shipping = 1.00;
+    const total = useMemo(() => subtotal + shipping, [subtotal]);
+
+    useEffect(()=>{
+        getProductDetail();
+    }, [])
+    
+      const getProductDetail = () => {
+      // const token = localStorage.getItem('token');
+      axios.get(`/api/web/drugs/${ slug }`, {
+        headers: {
+          'Content-Type': 'application/json',
+          // ...(token && { Authorization: `Bearer ${token}` }),
+        },
+      })
+      .then((response) => {
+        console.log('API response:', response.data);
+        if(response.data.statusCode == 200){
+            console.log('drugs:', response.data.response.drug);
+            console.log('setDrugForm:', response.data.response.drug.DrugForm.name);
+            setDrugForm(response.data.response.drug.DrugForm.name);
+            setProductName(response.data.response.drug.name);
+            setProductPrice(response.data.response.drug.price);
+            const mgValueMatch = response.data.response.drug.name.match(/(\d+(?:\.\d+)?)\s*mg/i);
+            const mgValue = mgValueMatch ? mgValueMatch[1] : 'N/A'; 
+            setMgValue(mgValue);
+        }
+        setLoading(false);
+        setError(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        setError(true);
+        setLoading(false);
+      });
+    };
+ return !loading ?(
    <>
    <div className="cart_section_1">
     <div className="container">
@@ -39,15 +86,15 @@ const Cart = () => {
                 </div> */}
                 <div className="row cart_product_main mt-2">
                     <div className="col-sm-6 text-start pb-3">
-                         <h5 className='text-primary text-start'>CART DETAILS (2 Items)</h5>
+                         <h5 className='text-primary text-start'>CART DETAILS (1 Items)</h5>
                         <div className="cart_product_detail_parent d-flex gap-2 align-items-center">
                             <div className="cart_image_main">
                                 <img src={P1} alt="" />
                             </div>
                             <div>
-                                <h6>Tadalafil (Cialis)Teva</h6>
+                                <h6>{productName}</h6>
                                 <div className="d-flex gap-3">
-                                    <p>Tablet • 2.5 mg • 30ct</p>
+                                    <p>{drugForm} • {mgValue} mg </p>
                                     <a href="" className='text-primary'><FontAwesomeIcon icon={faEdit} className="star-icon"/> Edit</a>
                                 </div>
                             </div>
@@ -67,7 +114,7 @@ const Cart = () => {
                     <div className="col-sm-3 mb-2">
                         <h5 className='text-primary text-start'>PRICE</h5>
                         <br />
-                        <h5 className='text-start'>$67.00</h5>
+                        <h5 className='text-start'>${Number(productPrice).toFixed(2)}</h5>
                     </div>
                 </div>
             </div>
@@ -75,11 +122,11 @@ const Cart = () => {
                 <h4 className='text-start mb-3'>Summary</h4>
                 <div className="d-flex justify-content-between mb-3">
                     <p>Subtotal</p>
-                    <p>$161.00</p>
+                    <p>${subtotal.toFixed(2)}</p>
                 </div>
                 <div className="d-flex justify-content-between mb-3">
                     <p>Shipping</p>
-                    <p>$1.00</p>
+                    <p>${shipping.toFixed(2)}</p>
                 </div>
                 <div className="d-flex justify-content-between mb-3">
                     <p>Tax</p>
@@ -87,11 +134,18 @@ const Cart = () => {
                 </div>
                 <div className="d-flex justify-content-between mb-3">
                     <p>Order Total:</p>
-                    <p>$161.00</p>
+                    <p>${total.toFixed(2)}</p>
                 </div>
-                <a href="/checkout">
+                <a href="/checkout"  onClick={() => {
+                    localStorage.setItem('cartSummary', JSON.stringify({
+                        productid: `${ slug }`,
+                        subtotal: subtotal.toFixed(2),
+                        shipping: shipping.toFixed(2),
+                        total: total.toFixed(2),
+                    }));
+                    }}>
                     <div className="cart_btn_main">
-                        <a href="/checkout" className="cart_btn_2">Proceed to Checkout</a>
+                        <div className="cart_btn_2">Proceed to Checkout</div>
                         <FontAwesomeIcon icon={faShoppingCart } className="text-white"/>
                         {/* <img src={CartImg} alt="" /> */}
                     </div>
@@ -156,7 +210,21 @@ const Cart = () => {
     </div>
    </div>
    </>
-  );
+   ) : 
+     (
+     <div  className='d-flex justify-content-center align-items-center' style={{height : "100vh"}}>
+         <Vortex
+         visible={true}
+         height="100"
+         width="100"
+         ariaLabel="vortex-loading"
+         wrapperStyle={{}}
+         wrapperClass="vortex-wrapper"
+         colors={['#005CE6', '#001C47', 'rgba(194, 3, 236, 1)', '#005CE6', '#001C47', 'rgba(194, 3, 236, 1)']}
+         />
+     </div>
+         
+   )
 };
 
 export default Cart;

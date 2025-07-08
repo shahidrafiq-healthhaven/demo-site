@@ -1,4 +1,4 @@
-import React, { useState  } from 'react';
+import React, { useState , useEffect } from 'react';
 import { Accordion } from 'react-bootstrap';
 import P1 from '../assets/images/p1.png';
 import P2 from '../assets/images/p2.png';
@@ -14,12 +14,21 @@ import { faCreditCard   } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
+import axios from 'axios';
+import { Vortex } from 'react-loader-spinner';
  
 const Checkout = () => {
   const [step, setStep] = useState(1);
   const [selectedOption, setSelectedOption] = useState("");
   const [selectedMethod, setSelectedMethod] = useState("usps");
   const [addSignature, setAddSignature] = useState(false);
+  const [summary, setSummary] = useState({ subtotal: 0, shipping: 0, total: 0 });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [drugForm, setDrugForm] = useState();
+  const [productName, setProductName] = useState();
+  const [productPrice, setProductPrice] = useState();
+  const [mgValue, setMgValue] = useState();
   const [formData, setFormData] = useState({
     recipient: 'Me',
     gender: '',
@@ -46,7 +55,50 @@ const Checkout = () => {
   const handleIncrease = () => setQuantity(quantity + 1);
   const handleDecrease = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
 
-  return (
+  useEffect(() => {
+    const stored = localStorage.getItem('cartSummary');
+    if (stored) {
+      setSummary(JSON.parse(stored));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (summary.productid) {
+      getProductDetail(summary.productid);
+    }
+  }, [summary]);
+    
+      const getProductDetail = () => {
+      // const token = localStorage.getItem('token');
+      axios.get(`/api/web/drugs/${summary.productid}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          // ...(token && { Authorization: `Bearer ${token}` }),
+        },
+      })
+      .then((response) => {
+        console.log('API response:', response.data);
+        if(response.data.statusCode == 200){
+            console.log('drugs:', response.data.response.drug);
+            console.log('setDrugForm:', response.data.response.drug.DrugForm.name);
+            setDrugForm(response.data.response.drug.DrugForm.name);
+            setProductName(response.data.response.drug.name);
+            setProductPrice(response.data.response.drug.price);
+            const mgValueMatch = response.data.response.drug.name.match(/(\d+(?:\.\d+)?)\s*mg/i);
+            const mgValue = mgValueMatch ? mgValueMatch[1] : 'N/A'; // e.g., "10"
+            setMgValue(mgValue);
+        }
+        setLoading(false);
+        setError(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        setError(true);
+        setLoading(false);
+      });
+    };
+
+  return !loading ?(
    <>
    <div className="container">
       <div className="row">
@@ -765,25 +817,25 @@ const Checkout = () => {
                     <img src={P1} alt="" />
                 </div>
                 <div>
-                  <strong>Tadalafil (Cialis)</strong>
+                  <strong>{productName}</strong>
                   <br />
-                  <small className="text-muted">Tablet • 2.5 mg • 30ct</small>
-                  <div className="cart_product_counter_parent mt-4 d-flex align-content-center gap-2">
+                  <small className="text-muted">{drugForm} • {mgValue} mg</small>
+                  {/* <div className="cart_product_counter_parent mt-4 d-flex align-content-center gap-2">
                     <p>QTY:</p>
                     <div className="cart_product_counter d-flex align-content-center" >
                         <div className='cart_counter_btn' onClick={handleDecrease}>-</div>
                         <span>{quantity}</span>
                         <div className='cart_counter_btn' onClick={handleIncrease}>+</div>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="d-flex gap-3">
-                    <Link to={`/cart`} >
+                    <Link to={`/cart/${summary.productid}`} >
                       <div className="d-flex align-content-center mt-3 gap-2" >
                         <FontAwesomeIcon icon={faTrash } className="star-icon mt-1"/>
                         <small>Remove</small>
                       </div>
                     </Link>
-                    <Link to={`/cart`} >
+                    <Link to={`/cart/${summary.productid}`} >
                       <div className="d-flex align-content-center mt-3 gap-2" >
                         <FontAwesomeIcon icon={faEdit} className="star-icon mt-1"/>
                         <small>Edit</small>
@@ -792,16 +844,16 @@ const Checkout = () => {
                   </div>
                 </div>
               </div>
-              <span>$27.00</span>
+              <span>${Number(productPrice).toFixed(2)}</span>
             </div>
             <div className="pt-3">
               <div className="d-flex justify-content-between  mb-1">
                 <p>Subtotal</p>
-                <p>$27.00</p>
+                <p>${summary.subtotal}</p>
               </div>
               <div className="d-flex justify-content-between  mb-1">
                 <p>Shipping</p>
-                <p>$5.00</p>
+                <p>${summary.shipping}</p>
               </div>
               <div className="d-flex justify-content-between  mb-1">
                 <p>Estimated Tax</p>
@@ -809,11 +861,11 @@ const Checkout = () => {
               </div>
               <div className="d-flex justify-content-between mt-3 mb-1">
                 <p className='text-primary'>ORDER TOTAL</p>
-                <p className='text-primary'>$32.00</p>
+                <p className='text-primary'>${summary.total}</p>
               </div>
             </div>
             <div className="d-flex  align-content-center offer_code_input">
-              <input type="text" className="form-control" placeholder="Offer code" />
+              <input type="text" className="form-control" placeholder="Offer code"   style={{ outline: 'none', boxShadow: 'none' }}/>
               <button className="btn py-0">Apply</button>
             </div>
           </div>
@@ -843,7 +895,21 @@ const Checkout = () => {
       </div>
     </div>
    </>
-  );
+    ) : 
+    (
+    <div  className='d-flex justify-content-center align-items-center' style={{height : "100vh"}}>
+        <Vortex
+        visible={true}
+        height="100"
+        width="100"
+        ariaLabel="vortex-loading"
+        wrapperStyle={{}}
+        wrapperClass="vortex-wrapper"
+        colors={['#005CE6', '#001C47', 'rgba(194, 3, 236, 1)', '#005CE6', '#001C47', 'rgba(194, 3, 236, 1)']}
+        />
+    </div>
+        
+  )
 };
 
 export default Checkout;

@@ -123,7 +123,7 @@ function Home() {
                           {popularSearches.map((item, index) => (
                             <Link
                               key={index}
-                              to={`/cialis/2`}
+                              to={`/product/2`}
                               className="btn btn-link p-0 text-primary text-decoration-none"
                             >
                               {item}
@@ -138,7 +138,7 @@ function Home() {
                           filteredProducts.map((item, index) => (
                             <Link
                               key={index}
-                              to={`/cialis/${item.id}`}
+                              to={`/product/${item.id}`}
                               className="d-flex justify-content-between text-decoration-none text-dark px-2 py-1 rounded hover-bg-light"
                             >
                               <span>{item.name}</span>
@@ -155,12 +155,12 @@ function Home() {
               </div>
               <p className='seacrh_text_bottom'>POPULAR SEARCHES</p>
               <div className="search_bottom_btn_main">
-                <a href="/cialis/2" className='Search_bottom_btn'>Cialis</a>
-                <a href="/cialis/2" className='Search_bottom_btn'>Wellbutrin</a>
-                <a href="/cialis/2" className='Search_bottom_btn'>Synthroid</a>
-                <a href="/cialis/2" className='Search_bottom_btn'>Lipitor</a>
-                <a href="/cialis/2" className='Search_bottom_btn'>Viagra</a>
-                <a href="/cialis/2" className='Search_bottom_btn'>Lexapro</a>
+                <a href="/product/2" className='Search_bottom_btn'>Cialis</a>
+                <a href="/product/2" className='Search_bottom_btn'>Wellbutrin</a>
+                <a href="/product/2" className='Search_bottom_btn'>Synthroid</a>
+                <a href="/product/2" className='Search_bottom_btn'>Lipitor</a>
+                <a href="/product/2" className='Search_bottom_btn'>Viagra</a>
+                <a href="/product/2" className='Search_bottom_btn'>Lexapro</a>
               </div>
             </div>
           </div>

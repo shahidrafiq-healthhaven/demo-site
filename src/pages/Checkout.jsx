@@ -70,7 +70,7 @@ const Checkout = () => {
     
       const getProductDetail = () => {
       // const token = localStorage.getItem('token');
-      axios.get(`/api/web/drugs/${summary.productid}`, {
+      axios.get(`https://app.healthhavenrx.com/api/web/drugs/${summary.productid}`, {
         headers: {
           'Content-Type': 'application/json',
           // ...(token && { Authorization: `Bearer ${token}` }),

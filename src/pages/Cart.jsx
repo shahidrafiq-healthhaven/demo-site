@@ -39,7 +39,7 @@ const Cart = () => {
     
       const getProductDetail = () => {
       // const token = localStorage.getItem('token');
-      axios.get(`/api/web/drugs/${ slug }`, {
+      axios.get(`https://app.healthhavenrx.com/api/web/drugs/${ slug }`, {
         headers: {
           'Content-Type': 'application/json',
           // ...(token && { Authorization: `Bearer ${token}` }),

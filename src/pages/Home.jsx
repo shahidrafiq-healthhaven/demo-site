@@ -23,6 +23,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { Accordion } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { Vortex } from 'react-loader-spinner';
 
 const popularSearches = ['Cialis', 'Wellbutrin', 'Synthroid', 'Lipitor', 'Viagra', 'Lexapro'];
 // const allProducts  = [
@@ -63,7 +64,7 @@ function Home() {
 
   const getSearch = (name) => {
   // const token = localStorage.getItem('token');
-  axios.get(`/api/web/drugs/search?name=${encodeURIComponent(name)}`, {
+  axios.get(`https://app.healthhavenrx.com/api/web/drugs/search?name=${encodeURIComponent(name)}`, {
     headers: {
       'Content-Type': 'application/json',
       // ...(token && { Authorization: `Bearer ${token}` }),
@@ -145,7 +146,18 @@ function Home() {
                             </Link>
                           ))
                         ) : (
-                          <p className="text-muted small mb-0">No matches found.</p>
+                          // <p className="text-muted small mb-0">No matches found.</p>
+                           <div  className='d-flex  align-items-center' style={{height : "40px"}}>
+                              <Vortex
+                              visible={true}
+                              height="40"
+                              width="40"
+                              ariaLabel="vortex-loading"
+                              wrapperStyle={{}}
+                              wrapperClass="vortex-wrapper"
+                              colors={['#005CE6', '#001C47', 'rgba(194, 3, 236, 1)', '#005CE6', '#001C47', 'rgba(194, 3, 236, 1)']}
+                              />
+                          </div>
                         )}
                       </>
                     )}

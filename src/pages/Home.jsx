@@ -147,7 +147,7 @@ function Home() {
                           ))
                         ) : (
                           // <p className="text-muted small mb-0">No matches found.</p>
-                           <div  className='d-flex  align-items-center' style={{height : "40px"}}>
+                           <div  className='d-flex justify-content-center align-items-center' style={{height : "40px"}}>
                               <Vortex
                               visible={true}
                               height="40"

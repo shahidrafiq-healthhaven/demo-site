@@ -254,11 +254,11 @@ return !loading ?(
                             type="radio"
                             className="btn-check radio_btn_cart"
                             name="custom-radio"
-                            value={option.name}
+                            value={option.strength}
                             onChange={(e) => setSelectedStrength(e.target.value)}
                             autoComplete="off"
                         />
-                        {option.name}
+                        {option.strength}
                         </label>
                     ))}
                 </div>

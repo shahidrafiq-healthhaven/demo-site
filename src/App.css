@@ -1011,6 +1011,11 @@ h4{
   cursor: pointer;
 }
 
+.custom-toast-container {
+  top: 70px !important;
+  right: 100px !important;
+}
+
 @media only screen and (max-width: 1400px){
   /* .section_2_image_main .image_pos{
     right: 0px;

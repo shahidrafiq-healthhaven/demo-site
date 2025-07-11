@@ -55,11 +55,11 @@ const Footer = () => {
             <ul className="list-unstyled">
               <li className="mb-2 d-flex align-items-center gap-4 contact_detail">
                  <img src={Location} alt="Location"/>
-                <span className="footer_text ms-2">5th Street, New York, USA</span>
+                <span className="footer_text ms-2">1 Chestnut Street Suite 200/3Y Nashua, NH 03060</span>
               </li>
               <li className="mb-2 d-flex align-items-center gap-4 contact_detail">
                 <img src={Email} alt="Email"/>
-                <a href="mailto:example@gmail.com" className="footer_text">example@gmail.com</a>
+                <a href="mailto:support@healthhavenrx.com" className="footer_text">support@healthhavenrx.com</a>
               </li>
               <li className="mb-2 d-flex align-items-center gap-4 contact_detail">
                 <img src={Phone} alt="Phone"/>

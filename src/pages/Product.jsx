@@ -264,7 +264,7 @@ return !loading ?(
                 </div>
                 <label className="form-label" >STRENGTH</label>
                 <div className="d-flex flex-wrap gap-3 mb-4">
-                    {Array.isArray(drugStrengths) && drugStrengths.length > 0  && drugStrengths.map((option) => (
+                    {/* {Array.isArray(drugStrengths) && drugStrengths.length > 0  && drugStrengths.map((option) => (
                         <label
                         key={option.strength}
                         className={`btn btn-outline-primary ${
@@ -282,7 +282,32 @@ return !loading ?(
                         />
                         {option.strength}
                         </label>
-                    ))}
+                    ))} */}
+                    {Array.isArray(drugStrengths) &&
+                        drugStrengths
+                            .filter((option, index, self) =>
+                            index === self.findIndex((o) => o.strength === option.strength)
+                            )
+                            .map((option) => (
+                            <label
+                                key={option.strength}
+                                className={`btn btn-outline-primary ${
+                                selectedStrength == option.strength ? 'active' : ''
+                                }`}
+                            >
+                                <input
+                                type="radio"
+                                className="btn-check radio_btn_cart"
+                                name="custom-radio"
+                                value={option.strength}
+                                checked={selectedStrength == option.strength}
+                                onChange={(e) => setSelectedStrength(e.target.value)}
+                                autoComplete="off"
+                                />
+                                {option.strength}
+                            </label>
+                        ))}
+
                 </div>
                 {/* <label className="form-label">PACKAGE SIZE</label>
                 <div className="d-flex flex-wrap gap-3 mb-4">

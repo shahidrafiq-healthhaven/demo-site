@@ -31,9 +31,7 @@ const Header = () => {
       <nav className="navbar navbar-expand-lg navbar-dark px-3">
         <div className="container">
           <div className="mobile_cart_icon">
-            <a href="">
-              <img src={Cart} alt="cart"  className="cart_icon"/>
-            </a>
+            <img src={Cart} alt="cart"  className="cart_icon" onClick={handleCartClick}/>
           </div>
 
           <a className="navbar-brand d-flex align-items-center" href="/">

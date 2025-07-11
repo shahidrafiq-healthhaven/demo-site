@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeQuantity } from '../stores/cartSlice';
 import { changeStrength } from '../stores/cartSlice';
 import { removeCartItem } from '../stores/cartSlice';
+import { emptyCart } from '../stores/cartSlice';
 import Swal from 'sweetalert2'
  
 const Checkout = () => {
@@ -114,23 +115,32 @@ const Checkout = () => {
     });
   }
   const totalItems = () => {
-      let total ;
-      total = carts.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      console.log("total :", total);
-      setTotalAmount(total);
+    let total ;
+    total = carts.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    console.log("total :", total);
+    setTotalAmount(total);
   }
   const totalCartItems = () => {
-      let total ;
-      total = carts.length;
-      setTotalCartItem(total)
-      console.log("totalCartItems",total);
+    let total ;
+    total = carts.length;
+    setTotalCartItem(total)
+    console.log("totalCartItems",total);
   }
   const setSelectedStrength = (product_id , strength) => {
-      dispatch(changeStrength({
-          product_id,
-          strength: strength
-      }));
+    dispatch(changeStrength({
+        product_id,
+        strength: strength
+    }));
   }
+const handlePlaceOrder = () => {
+  dispatch(emptyCart());
+  Swal.fire({
+    title: 'Order Placed!',
+    text: 'Thank you for your purchase.',
+    icon: 'success',
+    confirmButtonText: 'OK',
+  });
+};
   return !loading ?(
    <>
    <div className="container">
@@ -825,7 +835,9 @@ const Checkout = () => {
 
                   {/* Place Order Button */}
                   <div className="d-flex justify-content-end mb-4">
-                    <button className="btn btn-primary py-2" style={{ width: '400px' }} >
+                    <button className="btn btn-primary py-2" style={{ width: '400px' }} 
+                        onClick={handlePlaceOrder}
+                    >
                       Place Your Order
                     </button>
                   </div>
@@ -886,25 +898,36 @@ const Checkout = () => {
               <div className="mb-2 mt-2 border-bottom">
                   <h5 className="form-label text-start">STRENGTH</h5>
                   <div className="d-flex flex-wrap gap-3 mb-4">
-                      {Array.isArray(item.strengths) && item.strengths.length > 0  && item.strengths.map((option) => (
-                          <label
-                          key={option.strength}
-                          className={`btn btn-outline-primary ${
-                              item.selected_strengths == option.strength ? 'active' : ''
-                          }`}
-                          >
-                          <input
-                              type="radio"
-                              className="btn-check radio_btn_cart"
-                              name="custom-radio"
-                              value={option.strength}
-                              checked={item.selected_strengths == option.strength}
-                              onChange={(e) => setSelectedStrength(item.product_id, e.target.value)}
-                              autoComplete="off"
-                          />
-                          {option.strength}
-                          </label>
-                      ))}
+                      {Array.isArray(item.strengths) &&
+                      (() => {
+                        const seen = new Set();
+                        return item.strengths
+                          .filter((option) => {
+                            if (seen.has(option.strength)) return false;
+                            seen.add(option.strength);
+                            return true;
+                          })
+                          .map((option) => (
+                            <label
+                              key={option.strength}
+                              className={`btn btn-outline-primary ${
+                                item.selected_strengths == option.strength ? 'active' : ''
+                              }`}
+                            >
+                              <input
+                                type="radio"
+                                className="btn-check radio_btn_cart"
+                                name={`custom-radio-${item.product_id}`} 
+                                value={option.strength}
+                                checked={item.selected_strengths == option.strength}
+                                onChange={(e) => setSelectedStrength(item.product_id, e.target.value)}
+                                autoComplete="off"
+                              />
+                              {option.strength}
+                            </label>
+                          ));
+                      })()}
+
                   </div>
               </div>
             )}

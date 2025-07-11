@@ -17,7 +17,7 @@ function App() {
         <Outlet />
       <Footer/>
 
-      <ToastContainer position="top-right" autoClose={3000} />
+      <ToastContainer position="top-right" autoClose={3000}   className="custom-toast-container"/>
     </>
   )
 }

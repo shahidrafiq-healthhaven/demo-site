@@ -159,10 +159,10 @@ const Cart = () => {
                         <h5 className="text-start">${Number(item.price).toFixed(2)}</h5>
                     </div>
                     {editingProductId === item.product_id && (
-                    <div className="col-sm-3 mb-2">
+                    <div className="col-sm-12 mb-2">
                         <h5 className="form-label text-start">STRENGTH</h5>
                         <div className="d-flex flex-wrap gap-3 mb-4">
-                            {Array.isArray(item.strengths) && item.strengths.length > 0  && item.strengths.map((option) => (
+                            {/* {Array.isArray(item.strengths) && item.strengths.length > 0  && item.strengths.map((option) => (
                                 <label
                                 key={option.strength}
                                 className={`btn btn-outline-primary ${
@@ -180,7 +180,38 @@ const Cart = () => {
                                 />
                                 {option.strength}
                                 </label>
-                            ))}
+                            ))} */}
+                           {Array.isArray(item.strengths) &&
+                                (() => {
+                                    const seen = new Set();
+                                    return item.strengths
+                                    .filter((option) => {
+                                        if (seen.has(option.strength)) return false;
+                                        seen.add(option.strength);
+                                        return true;
+                                    })
+                                    .map((option) => (
+                                        <label
+                                        key={option.strength}
+                                        className={`btn btn-outline-primary ${
+                                            item.selected_strengths == option.strength ? 'active' : ''
+                                        }`}
+                                        >
+                                        <input
+                                            type="radio"
+                                            className="btn-check radio_btn_cart"
+                                            name={`custom-radio-${item.product_id}`} // Important to make each group unique
+                                            value={option.strength}
+                                            checked={item.selected_strengths == option.strength}
+                                            onChange={(e) => setSelectedStrength(item.product_id, e.target.value)}
+                                            autoComplete="off"
+                                        />
+                                        {option.strength}
+                                        </label>
+                                    ));
+                                })()}
+
+
                         </div>
                     </div>
                     )}

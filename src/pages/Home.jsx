@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import BannerLeftImage from '../assets/images/banner_left_img.png';
 import BannerRightImage from '../assets/images/banner_right_img.png';
 import SearchIcon from '../assets/images/search_icon.png';
@@ -22,10 +22,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { Accordion } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import http from "../http";
 import { Vortex } from 'react-loader-spinner';
 
-const popularSearches = ['Cialis', 'Wellbutrin', 'Synthroid', 'Lipitor', 'Viagra', 'Lexapro'];
+const popularSearches = [
+  { id: 420, name: 'Aspirin' },
+  { id: 643, name: 'Pravastatin' },
+  { id: 978, name: 'Wegovy' },
+  { id: 782, name: 'Syeda' },
+  { id: 541, name: 'Irbesartan' },
+  { id: 1957, name: 'Lexapro' },
+];
+
 // const allProducts  = [
 //   { name: 'Pramipexole (Mirapex ER)', price: '$90.00' },
 //   { name: 'Divalproex Extended Release (Depakote Er)', price: '$10.30', subtext: '3 choices' },
@@ -45,10 +53,15 @@ const faqData = [
 ];
 
 function Home() {
+  const popularRef = useRef(null);
   const [isFocused, setIsFocused] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredProducts, setFilteredProducts] = useState([]);
   
+  const scrollToPopular = () => {
+    popularRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   useEffect(() => {
     if (searchTerm.length >= 2) {
       const delayDebounce = setTimeout(() => {
@@ -63,13 +76,7 @@ function Home() {
   }, [searchTerm]);
 
   const getSearch = (name) => {
-  // const token = localStorage.getItem('token');
-  axios.get(`https://app.healthhavenrx.com/api/web/drugs/search?name=${encodeURIComponent(name)}`, {
-    headers: {
-      'Content-Type': 'application/json',
-      // ...(token && { Authorization: `Bearer ${token}` }),
-    },
-  })
+  http.get(`drugs/search?name=${encodeURIComponent(name)}`)
   .then((response) => {
     console.log('API response:', response.data);
     if(response.data.statusCode == 200){
@@ -94,9 +101,9 @@ function Home() {
           <img src={BannerRightImage} alt="BannerRightImage" className='BannerRightImage'/>
         </div>
           <h1 className="heading_primary">Affordable Prescriptions, Delivered with Care</h1>
-          <a href="/" className="banner_btn btn_primary">Get Started</a>
+          <button onClick={scrollToPopular} className="banner_btn btn_primary">Get Started</button>
           <div className="search_main">
-            <p className='seacrt_text_top'>Start your search here</p>
+            <p className='seacrt_text_top' ref={popularRef}>Start your search here</p>
             <div className="seacrh_input_main">
       
               <div className="position-relative w-100" >
@@ -114,24 +121,29 @@ function Home() {
                 />
               </div>
 
-                {isFocused && (
-                  <div className="position-absolute bg-white shadow rounded p-3 w-100" style={{ zIndex: 1000, maxHeight: '300px', overflowY: 'auto' }}>
-                    {searchTerm === '' ? (
-                      <>
+               {isFocused && (
+                  searchTerm === '' ? (
+                    <>
+                      <div
+                        className="position-absolute bg-white shadow rounded p-3 w-100"
+                        style={{ zIndex: 1000, maxHeight: '300px', overflowY: 'auto' }}
+                      >
                         <p className="text-muted small mb-2">POPULAR SEARCHES</p>
                         <div className="d-flex flex-wrap gap-2">
                           {popularSearches.map((item, index) => (
                             <Link
-                              key={index}
-                              to={`/product/2`}
+                              key={item.id}
+                              to={`/product/${item.id}`}
                               className="btn btn-link p-0 text-primary text-decoration-none"
                             >
-                              {item}
+                              {item.name}
                             </Link>
                           ))}
                         </div>
-                      </>
-                    ) : (
+                      </div>
+                    </>
+                  ) : searchTerm.length >= 2 ? (
+                    <div className="position-absolute bg-white shadow rounded p-3 w-100" style={{ zIndex: 1000, maxHeight: '300px', overflowY: 'auto' }}>
                       <>
                         <p className="text-muted small mb-2">RESULTS</p>
                         {filteredProducts.length > 0 ? (
@@ -142,36 +154,41 @@ function Home() {
                               className="d-flex justify-content-between text-decoration-none text-dark px-2 py-1 rounded hover-bg-light"
                             >
                               <span>{item.name}</span>
-                              <span className="text-primary">${Number(item.price).toFixed(2)}</span>
+                              <span className="text-primary">
+                                ${Number(item.price).toFixed(2)}
+                              </span>
                             </Link>
                           ))
                         ) : (
-                          // <p className="text-muted small mb-0">No matches found.</p>
-                           <div  className='d-flex justify-content-center align-items-center' style={{height : "40px"}}>
-                              <Vortex
+                          <div
+                            className="d-flex justify-content-center align-items-center"
+                            style={{ height: '40px' }}
+                          >
+                            <Vortex
                               visible={true}
                               height="40"
                               width="40"
                               ariaLabel="vortex-loading"
                               wrapperStyle={{}}
                               wrapperClass="vortex-wrapper"
-                              colors={['#005CE6', '#001C47', 'rgba(194, 3, 236, 1)', '#005CE6', '#001C47', 'rgba(194, 3, 236, 1)']}
-                              />
+                              colors={[ '#005CE6', '#001C47', 'rgba(194, 3, 236, 1)', '#005CE6', '#001C47','rgba(194, 3, 236, 1)' ]}
+                            />
                           </div>
                         )}
                       </>
-                    )}
-                  </div>
+                    </div>
+                  ) : null
                 )}
+
               </div>
               <p className='seacrh_text_bottom'>POPULAR SEARCHES</p>
               <div className="search_bottom_btn_main">
-                <a href="/product/2" className='Search_bottom_btn'>Cialis</a>
-                <a href="/product/2" className='Search_bottom_btn'>Wellbutrin</a>
-                <a href="/product/2" className='Search_bottom_btn'>Synthroid</a>
-                <a href="/product/2" className='Search_bottom_btn'>Lipitor</a>
-                <a href="/product/2" className='Search_bottom_btn'>Viagra</a>
-                <a href="/product/2" className='Search_bottom_btn'>Lexapro</a>
+                <a href="/product/420" className='Search_bottom_btn'>Aspirin</a>
+                <a href="/product/643" className='Search_bottom_btn'>Pravastatin</a>
+                <a href="/product/978" className='Search_bottom_btn'>Wegovy</a>
+                <a href="/product/782" className='Search_bottom_btn'>Syeda</a>
+                <a href="/product/541" className='Search_bottom_btn'>Irbesartan</a>
+                <a href="/product/1957" className='Search_bottom_btn'>Lexapro</a>
               </div>
             </div>
           </div>

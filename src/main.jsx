@@ -13,6 +13,8 @@ import Aboutus from './pages/Aboutus.jsx'
 import Contactus from './pages/Contactus.jsx'
 import Partners from './pages/Partners.jsx'
 import Login from './pages/Login.jsx'
+import { Provider } from 'react-redux'
+import {store} from './stores'
 
 const router = createBrowserRouter([
   {
@@ -32,7 +34,7 @@ const router = createBrowserRouter([
         element: <ProductDetail />
       },
       {
-        path: "/cart/:slug",
+        path: "/cart",
         element: <Cart />
       },
       {
@@ -55,15 +57,14 @@ const router = createBrowserRouter([
         path: "/login",
         element: <Login />
       },
-      //   path: "/productdetails/:slug",
-      //   element: <ProductDetail />
-      // },
      
     ]
   }
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router} />
+  <Provider store={store}>
+    <RouterProvider router={router} />
+  </Provider>
 )
 

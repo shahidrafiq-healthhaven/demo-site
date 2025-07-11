@@ -11,11 +11,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { faTrash  } from '@fortawesome/free-solid-svg-icons';
 import { faCreditCard   } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
-import axios from 'axios';
+import http from "../http";
 import { Vortex } from 'react-loader-spinner';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeQuantity } from '../stores/cartSlice';
+import { changeStrength } from '../stores/cartSlice';
+import { removeCartItem } from '../stores/cartSlice';
+import Swal from 'sweetalert2'
  
 const Checkout = () => {
   const [step, setStep] = useState(1);
@@ -29,6 +34,12 @@ const Checkout = () => {
   const [productName, setProductName] = useState();
   const [productPrice, setProductPrice] = useState();
   const [mgValue, setMgValue] = useState();
+  const dispatch = useDispatch();
+  const carts = useSelector(store => store.cart.items);
+  const [totalAmount, setTotalAmount]= useState(0);
+  const [totalCartItem, setTotalCartItem] = useState(0)
+  const [editingProductId, setEditingProductId] = useState(null);
+  const shipping = 1.00;
   const [formData, setFormData] = useState({
     recipient: 'Me',
     gender: '',
@@ -63,41 +74,63 @@ const Checkout = () => {
   }, []);
 
   useEffect(() => {
-    if (summary.productid) {
-      getProductDetail(summary.productid);
-    }
-  }, [summary]);
+    totalItems();
+    totalCartItems();
+    setLoading(false);
+  }, [carts]);
     
-      const getProductDetail = () => {
-      // const token = localStorage.getItem('token');
-      axios.get(`https://app.healthhavenrx.com/api/web/drugs/${summary.productid}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          // ...(token && { Authorization: `Bearer ${token}` }),
-        },
-      })
-      .then((response) => {
-        console.log('API response:', response.data);
-        if(response.data.statusCode == 200){
-            console.log('drugs:', response.data.response.drug);
-            console.log('setDrugForm:', response.data.response.drug.DrugForm.name);
-            setDrugForm(response.data.response.drug.DrugForm.name);
-            setProductName(response.data.response.drug.name);
-            setProductPrice(response.data.response.drug.price);
-            const mgValueMatch = response.data.response.drug.name.match(/(\d+(?:\.\d+)?)\s*mg/i);
-            const mgValue = mgValueMatch ? mgValueMatch[1] : 'N/A'; // e.g., "10"
-            setMgValue(mgValue);
+  const handleMinusQuantity = (product_id, quantity) => {
+      if(quantity > 1){
+          dispatch(changeQuantity({
+              product_id,
+              quantity: quantity - 1
+          }));
+          
+      }
+  }
+  const handlePlusQuantity = (product_id, quantity) => {
+      dispatch(changeQuantity({
+          product_id,
+          quantity: quantity + 1
+      }));
+  }
+  const deleteItem = (product_id, selected_strengths) => {
+    Swal.fire({
+        title: 'Remove Item',
+        text: 'Are you sure you would like to remove this item from your shopping cart?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            dispatch(removeCartItem({
+                product_id,
+                selected_strengths
+            }));
         }
-        setLoading(false);
-        setError(false);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-        setError(true);
-        setLoading(false);
-      });
-    };
-
+    });
+  }
+  const totalItems = () => {
+      let total ;
+      total = carts.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      console.log("total :", total);
+      setTotalAmount(total);
+  }
+  const totalCartItems = () => {
+      let total ;
+      total = carts.length;
+      setTotalCartItem(total)
+      console.log("totalCartItems",total);
+  }
+  const setSelectedStrength = (product_id , strength) => {
+      dispatch(changeStrength({
+          product_id,
+          strength: strength
+      }));
+  }
   return !loading ?(
    <>
    <div className="container">
@@ -811,49 +844,80 @@ const Checkout = () => {
               </div>
               <span>PRICE</span>
             </div>
-            <div className="d-flex justify-content-between border-bottom py-2">
+            {carts.length === 0 ? (
+              <div className="text-center py-5">
+                <h5>You have no items in your shopping cart.</h5>
+                <a href="/" className='text-primary'>Back to Home</a>
+              </div>
+            ) : ( carts.map((item, index)=>(
+            <React.Fragment key={index}>
+            <div className="d-flex justify-content-between py-2 border-bottom" key={index}>
               <div className="d-flex gap-3">
                 <div className="cart_image_main">
                     <img src={P1} alt="" />
                 </div>
                 <div>
-                  <strong>{productName}</strong>
+                  <strong>{item.name}</strong>
                   <br />
-                  <small className="text-muted">{drugForm} • {mgValue} mg</small>
-                  {/* <div className="cart_product_counter_parent mt-4 d-flex align-content-center gap-2">
+                  <small className="text-muted">{item.form} • {item.selected_strengths}</small>
+                  <div className="cart_product_counter_parent mt-4 d-flex align-content-center gap-2">
                     <p>QTY:</p>
                     <div className="cart_product_counter d-flex align-content-center" >
-                        <div className='cart_counter_btn' onClick={handleDecrease}>-</div>
-                        <span>{quantity}</span>
-                        <div className='cart_counter_btn' onClick={handleIncrease}>+</div>
+                        <div className='cart_counter_btn' onClick={() =>handleMinusQuantity(item.product_id, item.quantity)}>-</div>
+                        <span>{item.quantity}</span>
+                        <div className='cart_counter_btn' onClick={() =>handlePlusQuantity(item.product_id, item.quantity)}>+</div>
                     </div>
-                  </div> */}
+                  </div>
                   <div className="d-flex gap-3">
-                    <Link to={`/cart/${summary.productid}`} >
-                      <div className="d-flex align-content-center mt-3 gap-2" >
-                        <FontAwesomeIcon icon={faTrash } className="star-icon mt-1"/>
-                        <small>Remove</small>
-                      </div>
-                    </Link>
-                    <Link to={`/cart/${summary.productid}`} >
-                      <div className="d-flex align-content-center mt-3 gap-2" >
-                        <FontAwesomeIcon icon={faEdit} className="star-icon mt-1"/>
-                        <small>Edit</small>
-                      </div>
-                    </Link>
+                    <div className="d-flex align-content-center mt-3 gap-2 cursor-pointer" onClick={()=>deleteItem(item.product_id, item.selected_strengths)}>
+                      <FontAwesomeIcon icon={faTrash } className="star-icon mt-1"/>
+                      <small>Remove</small>
+                    </div>
+                    <div className="d-flex align-content-center mt-3 gap-2 cursor-pointer" onClick={() => setEditingProductId(item.product_id)} >
+                      <FontAwesomeIcon icon={faEdit} className="star-icon mt-1"/>
+                      <small>Edit</small>
+                    </div>
                   </div>
                 </div>
               </div>
-              <span>${Number(productPrice).toFixed(2)}</span>
+              <span>${Number(item.price).toFixed(2)}</span>
             </div>
+            {editingProductId === item.product_id && (
+              <div className="mb-2 mt-2 border-bottom">
+                  <h5 className="form-label text-start">STRENGTH</h5>
+                  <div className="d-flex flex-wrap gap-3 mb-4">
+                      {Array.isArray(item.strengths) && item.strengths.length > 0  && item.strengths.map((option) => (
+                          <label
+                          key={option.strength}
+                          className={`btn btn-outline-primary ${
+                              item.selected_strengths == option.strength ? 'active' : ''
+                          }`}
+                          >
+                          <input
+                              type="radio"
+                              className="btn-check radio_btn_cart"
+                              name="custom-radio"
+                              value={option.strength}
+                              checked={item.selected_strengths == option.strength}
+                              onChange={(e) => setSelectedStrength(item.product_id, e.target.value)}
+                              autoComplete="off"
+                          />
+                          {option.strength}
+                          </label>
+                      ))}
+                  </div>
+              </div>
+            )}
+            </React.Fragment>
+            )))}
             <div className="pt-3">
               <div className="d-flex justify-content-between  mb-1">
                 <p>Subtotal</p>
-                <p>${summary.subtotal}</p>
+                <p>${totalAmount.toFixed(2)}</p>
               </div>
               <div className="d-flex justify-content-between  mb-1">
                 <p>Shipping</p>
-                <p>${summary.shipping}</p>
+                <p>${shipping.toFixed(2)}</p>
               </div>
               <div className="d-flex justify-content-between  mb-1">
                 <p>Estimated Tax</p>
@@ -861,7 +925,7 @@ const Checkout = () => {
               </div>
               <div className="d-flex justify-content-between mt-3 mb-1">
                 <p className='text-primary'>ORDER TOTAL</p>
-                <p className='text-primary'>${summary.total}</p>
+                <p className='text-primary'>${(totalAmount + shipping).toFixed(2)}</p>
               </div>
             </div>
             <div className="d-flex  align-content-center offer_code_input">

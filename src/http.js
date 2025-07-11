@@ -11,5 +11,5 @@ if (token) {
 
 export default axios.create({
     baseURL: "https://app.healthhavenrx.com/api/web/",
-    // headers: headers
+    headers: headers
 })

@@ -12,11 +12,15 @@ const Header = () => {
   const [summary, setSummary] = useState({ subtotal: 0, shipping: 0, total: 0 });
 
   const handleCartClick = () => {
-    const stored = localStorage.getItem('cartSummary');
+    const stored = localStorage.getItem('carts');
     if (stored) {
       const parsed = JSON.parse(stored);
-      setSummary(parsed); 
-      navigate(`/cart/${parsed.productid}`);
+      if (parsed.length > 0) {
+        setSummary(parsed); 
+        navigate(`/cart`);
+      }else{
+        toast.warning('Your cart is empty!');
+      }
     } else {
       toast.warning('Your cart is empty!');
     }
@@ -58,9 +62,9 @@ const Header = () => {
               <li className="nav-item">
                 <Link to={`/aboutus`} className="nav-link" >About Us</Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link to={`/`} className="nav-link" >For Providers</Link>
-              </li>
+              </li> */}
               <li className="nav-item">
                 <Link to={`/partners`} className="nav-link" >For Partners</Link>
               </li>

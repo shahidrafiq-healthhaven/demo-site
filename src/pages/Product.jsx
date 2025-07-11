@@ -15,10 +15,11 @@ import News2 from '../assets/images/new_2.webp';
 import News3 from '../assets/images/new_3.webp';
 import News4 from '../assets/images/new_4.webp';
 import News5 from '../assets/images/new_5.webp';
-import { Link, useParams } from 'react-router-dom';
-import { BallTriangle } from 'react-loader-spinner';
+import { Link, useParams , useNavigate} from 'react-router-dom';
 import { Vortex } from 'react-loader-spinner';
-import axios from 'axios';
+import http from "../http";
+import {useSelector, useDispatch} from 'react-redux'
+import { addToCart } from '../stores/cartSlice';
 
  const forms = [
     { label: 'Tablet', value: 'tablet' },
@@ -110,7 +111,7 @@ const faqData = [
 ];
 const Product = () => {
     // const [selectedForm, setSelectedForm] = useState('Tablets');
-    const [selectedStrength, setSelectedStrength] = useState("2.5mg");
+    const [selectedStrength, setSelectedStrength] = useState('');
     const [selectedPackageSize, setSelectedPackageSize] = useState();
     const [displayedProducts, setDisplayedProducts] = useState([]);
     const [loading, setLoading] = useState(true)
@@ -124,6 +125,12 @@ const Product = () => {
     const [drugStrengths, setDrugStrengths] = useState();
     const [productName, setProductName] = useState();
     const [productPrice, setProductPrice] = useState();
+    const carts = useSelector(store => store.cart.items);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+
+    console.log("store cart :", carts);
 
     useEffect(() => {
         setDisplayedProducts(allProducts[selectedStrength] || []);
@@ -134,13 +141,7 @@ const Product = () => {
     }, [])
 
   const getProductDetail = () => {
-  // const token = localStorage.getItem('token');
-  axios.get(`https://app.healthhavenrx.com/api/web/drugs/${ slug }`, {
-    headers: {
-      'Content-Type': 'application/json',
-      // ...(token && { Authorization: `Bearer ${token}` }),
-    },
-  })
+  http.get(`drugs/${ slug }`)
   .then((response) => {
     console.log('API response:', response.data);
     if(response.data.statusCode == 200){
@@ -153,6 +154,11 @@ const Product = () => {
         setDrugStrengths(response.data.response.drug.strengths);
         setProductName(response.data.response.drug.name);
         setProductPrice(response.data.response.drug.price);
+        // const mgValueMatch = response.data.response.drug.name.match(/(\d+(?:\.\d+)?)\s*mg/i);
+        // const mgValue = mgValueMatch ? mgValueMatch[1] : 'N/A'; 
+        const mgValueMatch = response.data.response.drug.name.match(/(\d+(?:\.\d+)?\s*mg)/i);
+        const mgValue = mgValueMatch ? mgValueMatch[1] : 'N/A';
+        setSelectedStrength(mgValue);
     }
     setLoading(false);
     setError(false);
@@ -163,6 +169,21 @@ const Product = () => {
     setLoading(false);
   });
 };
+
+const handleAddToCart = async () => {
+    const data = {
+        product_id: slug,
+        name: productName,
+        form: drugForm,
+        quantity: 1,
+        strengths: drugStrengths,
+        selected_strengths: selectedStrength,
+        price: parseFloat(productPrice, 10),
+    };
+    console.log("form data: ", data);
+    dispatch(addToCart(data))
+    navigate(`/cart`);
+}
 
   // Calculate price based on package size
 //   const calculatePrice = (basePrice) => {
@@ -241,13 +262,13 @@ return !loading ?(
                     )}
 
                 </div>
-                <label className="form-label">STRENGTH</label>
+                <label className="form-label" >STRENGTH</label>
                 <div className="d-flex flex-wrap gap-3 mb-4">
-                    {drugStrengths.map((option) => (
+                    {Array.isArray(drugStrengths) && drugStrengths.length > 0  && drugStrengths.map((option) => (
                         <label
-                        key={option.name}
+                        key={option.strength}
                         className={`btn btn-outline-primary ${
-                            productName === option.name ? 'active' : ''
+                            selectedStrength == option.strength ? 'active' : ''
                         }`}
                         >
                         <input
@@ -255,6 +276,7 @@ return !loading ?(
                             className="btn-check radio_btn_cart"
                             name="custom-radio"
                             value={option.strength}
+                            checked={selectedStrength == option.strength}
                             onChange={(e) => setSelectedStrength(e.target.value)}
                             autoComplete="off"
                         />
@@ -285,6 +307,7 @@ return !loading ?(
                     ))}
                 </div> */}
             </div>
+
              {/* {displayedProducts.map((product, index) => (
                 <div className="col-md-3" key={index}>
                 <div className="product_card mb-3">
@@ -324,14 +347,15 @@ return !loading ?(
                             <h2><small>$</small> {Number(productPrice).toFixed(2)}</h2>
                         </div>
                         <div className="col-6">
-                            <a href={`/cart/${slug}`} className="cart_btn">Add to Cart</a>
+                            {/* <a href={`/cart/${slug}`} className="cart_btn">Add to Cart</a> */}
+                            <button className="cart_btn" onClick={() => handleAddToCart()}>Add to Cart</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
      
-        <div className="product_question_main">
+        {/* <div className="product_question_main">
             <h4 className="product_question">How do we decide on “pharmacist pick”?</h4>
             <p>Our "pharmacist pick" is a combination of a few different factors. First, we take into account what is most requested and well-reviewed by patients. Our pharmacists also consider how long a manufacturer has been making a given drug, and the general reputation of the manufacturer.</p>
         </div>
@@ -365,11 +389,11 @@ return !loading ?(
                     {showMore ? `Less about ${productName}` : `More about ${productName}`}
                 </h5>
             </div>
-         </div>
+         </div> */}
 
 
         {/* FAQ Section */}
-        <div className="faq_main product_faqs">
+        {/* <div className="faq_main product_faqs">
             <div className="container">
                 <h2 className="heading_primary">{productName} FAQs</h2>
                 <p>IMPORTANT: The FAQ answers below do NOT contain all the information about this particular drug. These answers are not substitutes for a medication guide, pharmacist consultation or the advice of your health care professional. For the official medication guide or further questions please call our pharmacists at 1-833-466-3979.</p>
@@ -385,10 +409,10 @@ return !loading ?(
                     </Accordion>
                 </div>
             </div>
-        </div>
+        </div> */}
 
         {/* Section 1 */}
-        <div className="section_1_main product_work_section">
+        <div className="section_1_main product_work_section mt-5">
             <div className="container">
                 <h3 className="section_1_heading">How it Works</h3>
                 <div className="row">

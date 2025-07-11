@@ -61,10 +61,10 @@ const Footer = () => {
                 <img src={Email} alt="Email"/>
                 <a href="mailto:support@healthhavenrx.com" className="footer_text">support@healthhavenrx.com</a>
               </li>
-              <li className="mb-2 d-flex align-items-center gap-4 contact_detail">
+              {/* <li className="mb-2 d-flex align-items-center gap-4 contact_detail">
                 <img src={Phone} alt="Phone"/>
                 <a href="tel:+1 123 456 789" className="footer_text">+1 123 456 789</a>
-              </li>
+              </li> */}
             </ul>
           </div>
           {/* <div className="col-md-1"></div> */}

@@ -175,7 +175,7 @@ const handleAddToCart = async () => {
         product_id: slug,
         name: productName,
         form: drugForm,
-        quantity: 1,
+        quantity: 30,
         strengths: drugStrengths,
         selected_strengths: selectedStrength,
         price: parseFloat(productPrice, 10),

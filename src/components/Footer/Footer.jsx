@@ -30,18 +30,18 @@ const Footer = () => {
             </div>
             <div className="col-md-6 text-end">
                 <div className="d-flex justify-content-md-end justify-content-start gap-3 social_main">
-                    <a href="#" className="social_icon">
+                    {/* <a href="#" className="social_icon">
                         <img src={Facebook} alt="Facebook"/>
                     </a>
                     <a href="#" className="social_icon">
                         <img src={Instagram} alt="Instagram"/>
-                    </a>
-                    <a href="#" className="social_icon">
+                    </a> */}
+                    <a href="https://www.linkedin.com/company/healthhavenrx" className="social_icon">
                         <img src={Linkedin} alt="Linkedin"/>
                     </a>
-                    <a href="#" className="social_icon">
+                    {/* <a href="#" className="social_icon">
                         <img src={Tiktok} alt="Tiktok"/>
-                    </a>
+                    </a> */}
                     
                 </div>
             </div>
@@ -74,13 +74,9 @@ const Footer = () => {
             <h6 className="footer_heading">Quick Links</h6>
             <ul className="list-unstyled">
               <li><Link to={`/aboutus`} className="text-white text-decoration-none footer_text" >About Us</Link></li>
-              <li><Link to={`/`} className="text-white text-decoration-none footer_text" >Our History</Link></li>
+              {/* <li><Link to={`/`} className="text-white text-decoration-none footer_text" >Our History</Link></li> */}
               <li><Link to={`/`} className="text-white text-decoration-none footer_text" >FAQ</Link></li>
               <li><Link to={`/contactus`} className="text-white text-decoration-none footer_text" >Contact Us</Link></li>
-              {/* <li><a href="#" className="text-white text-decoration-none footer_text">About Us</a></li>
-              <li><a href="#" className="text-white text-decoration-none footer_text">Our History</a></li>
-              <li><a href="#" className="text-white text-decoration-none footer_text">FAQ</a></li>
-              <li><a href="#" className="text-white text-decoration-none footer_text">Contact Us</a></li> */}
             </ul>
           </div>
 
@@ -89,7 +85,7 @@ const Footer = () => {
             <h6 className="footer_heading">Services</h6>
             <ul className="list-unstyled">
               <li><Link to={`/aboutus`} className="text-white text-decoration-none footer_text" >About Us</Link></li>
-              <li><Link to={`/`} className="text-white text-decoration-none footer_text" >Our History</Link></li>
+              {/* <li><Link to={`/`} className="text-white text-decoration-none footer_text" >Our History</Link></li> */}
               <li><Link to={`/`} className="text-white text-decoration-none footer_text" >FAQ</Link></li>
               <li><Link to={`/contactus`} className="text-white text-decoration-none footer_text" >Contact Us</Link></li>
             </ul>
@@ -100,7 +96,7 @@ const Footer = () => {
             <h6 className="footer_heading">Resource</h6>
             <ul className="list-unstyled">
               <li><Link to={`/aboutus`} className="text-white text-decoration-none footer_text" >About Us</Link></li>
-              <li><Link to={`/`} className="text-white text-decoration-none footer_text" >Our History</Link></li>
+              {/* <li><Link to={`/`} className="text-white text-decoration-none footer_text" >Our History</Link></li> */}
               <li><Link to={`/`} className="text-white text-decoration-none footer_text" >FAQ</Link></li>
               <li><Link to={`/contactus`} className="text-white text-decoration-none footer_text" >Contact Us</Link></li>
             </ul>

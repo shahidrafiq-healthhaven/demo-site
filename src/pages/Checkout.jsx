@@ -81,19 +81,21 @@ const Checkout = () => {
   }, [carts]);
     
   const handleMinusQuantity = (product_id, quantity) => {
-      if(quantity > 1){
+      if(quantity > 30){
           dispatch(changeQuantity({
               product_id,
-              quantity: quantity - 1
+              quantity: quantity - 30
           }));
           
       }
   }
   const handlePlusQuantity = (product_id, quantity) => {
+    if(quantity < 90){
       dispatch(changeQuantity({
           product_id,
-          quantity: quantity + 1
+          quantity: quantity + 30
       }));
+    }
   }
   const deleteItem = (product_id, selected_strengths) => {
     Swal.fire({
